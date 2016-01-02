@@ -35,33 +35,25 @@
 &lt;li&gt;通过在examples中指定返回数据。（实例如上）&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;通过在schema中指定返回数据。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;"schema": {
-          "title": "Pets",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Pet"
-          }
-        }
-指定返回若干Pet结构体数据。
-"definitions": {
-               "Pet": {
-                      "properties": {
-                                   "name": {
-                                           "type": "string"
-                                           },
-                                   "birthday": {
-                                           "type": "integer",
-                                           "format": "int32"
-                                           },
-                                   "company": {
-                                           "type": "string"
-                                          },
-                                   "sex": {
-                                           "type": "string"
-                                          }
-                                   }
-                     }
-              }&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;"definitions": {
+"Pet": {
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "birthday": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "company": {
+      "type": "string"
+    },
+    "sex": {
+      "type": "string"
+    }
+  }
+}
+  }&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;MockKoa会自动生成5个Pet并且返回(5个是固定值，用户无法修改)。MockKoa在生成Pet时，会自动若干属性值，例如name，birthday，company，sex等等这些都会自动生成，除此之外，是会自动生成手机号(phone)，信用卡卡号(creditid)。但因为这些值都属于模拟计算得出，无法贴合实际情况，请用户知晓此点。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
