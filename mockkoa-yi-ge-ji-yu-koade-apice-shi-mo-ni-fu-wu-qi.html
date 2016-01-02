@@ -148,30 +148,31 @@
 <p>用户设定Body数据有两种方式：</p>
 <ol>
 <li>通过在examples中指定返回数据。（实例如上）</li>
-<li>
-<p>通过在schema中指定返回数据。</p>
-<p><code>"definitions": {
-"Pet": {
-  "properties": {
-    "name": {
-      "type": "string"
-    },
-    "birthday": {
-      "type": "integer",
-      "format": "int32"
-    },
-    "company": {
-      "type": "string"
-    },
-    "sex": {
-      "type": "string"
+<li>通过在schema中指定返回数据。</li>
+</ol>
+<div class="highlight"><pre>&quot;definitions&quot;: {
+    &quot;Pet&quot;: {
+      &quot;properties&quot;: {
+        &quot;name&quot;: {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        &quot;birthday&quot;: {
+          &quot;type&quot;: &quot;integer&quot;,
+          &quot;format&quot;: &quot;int32&quot;
+        },
+        &quot;company&quot;: {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        &quot;sex&quot;: {
+          &quot;type&quot;: &quot;string&quot;
+        }
+      }
     }
   }
-}
-  }</code></p>
+</pre></div>
+
+
 <p>MockKoa会自动生成5个Pet并且返回(5个是固定值，用户无法修改)。MockKoa在生成Pet时，会自动若干属性值，例如name，birthday，company，sex等等这些都会自动生成，除此之外，是会自动生成手机号(phone)，信用卡卡号(creditid)。但因为这些值都属于模拟计算得出，无法贴合实际情况，请用户知晓此点。</p>
-</li>
-</ol>
 <h4>响应Header数据</h4>
 <p><strong>Header的处理未经充分测试，可能存在一些问题</strong>。MockKoa会按照用户所设定的Header值返回指定的Header，但因为时间关系，这部分未经充分测试，在解析swagger文件时可能会出现用户多处定义Header信息，但MockKoa只会返回其中某一处Header的情况。</p>
 <h2>MockKoa有哪些模拟策略？</h2>
