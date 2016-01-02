@@ -69,6 +69,11 @@
 						<i class="icon-folder-open icon-large"></i>Blog
 					</a>
                   </li>
+                  <li >
+                    <a href="/category/nodejs.html">
+						<i class="icon-folder-open icon-large"></i>Nodejs
+					</a>
+                  </li>
 
                           <ul class="nav pull-right">
                                 <li><a href="/archives.html"><i class="icon-th-list"></i>Archives</a></li>
@@ -84,6 +89,44 @@
     <div class="container-fluid">
       <div class="row">
         <div class="span9" id="content">
+        <div class="article">
+                <h1><a href="/mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html">MockKoa - 一个基于Koa的API测试模拟服务器</a></h1>
+                <div class="well small"><footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2016-01-02T00:00:00+08:00">
+        <i class="icon-calendar"></i>六 02 一月 2016
+</abbr>
+<span class="label">By</span>
+<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
+<span class="label">Category</span>
+<a href="/category/nodejs.html"><i class="icon-folder-open"></i>Nodejs</a>.
+
+
+</footer><!-- /.post-info --></div>
+                <div class="summary"><h1>MockKoa － 一个基于Koa的API测试服务器</h1>
+<p>来自于andy的博客<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#121;&#46;&#122;&#104;&#97;&#110;&#103;&#116;&#97;&#111;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#97;&#110;&#100;&#121;&#46;&#122;&#104;&#97;&#110;&#103;&#116;&#97;&#111;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a></p>
+<h2>MockKoa是什么？</h2>
+<p>MockKoa是一个基于Koa＋nodejs的Rest API的测试服务器，说成是框架也可以，但我认为距离框架还有一些距离。</p>
+<p>MockKoa使用nodejs来开发，通过Koa完成主要逻辑处理，可以加载以swagger为载体的API服务。(如果不了解swagger,<a href="www.swagger.io">请点击这里</a>)</p>
+<p>目前MockKoa仅仅支持swagger格式，未来会考虑支持Yaml格式，但目前还没有具体时间安排。</p>
+<h2>MockKoa可以做什么？</h2>
+<p>MockKoa最重要的功能就是按照模拟策略生成API返回值，针对用户发起的每个API请求都可以生成唯一准确并且满足用户预期的返回值。</p>
+<p>返回值包括：</p>
+<ul>
+<li>响应状态码</li>
+<li>响应body数据</li>
+<li>响应header数据</li>
+</ul>
+<h4>响应状态码</h4>
+<p>MockKoa可以根据用户设定的模拟策略来返回指定的状态码。MockKoa支持多种模拟策略，并且支持一定的逻辑处理，但MockKoa不会自动生成状态码，这些状态码仍然需要用户明确指定。指定的方式可以是通过swagger文件指定或者通过用户自定义代码指定。</p>
+<p>MockKoa在返回状态码时不会校验状态码是否有效，即便用户设定需要返回的响应码为601，MockKoa也会"乖顺"的返回此值。所以需要用户自行保证状态码是否有效。</p>
+<p>同时，MockKoa不会处理重定向请求。对于重定向请求，需要客户端来处理，MockKoa模拟的是服务端，所以不需要处理重定向请求(有一些用户问过此问题，所以补充此处说明)。</p>
+<h4>响应body数据</h4>
+<p>MockKoa可以根据用户设定的body数据返回。 MockKoa默认设定Content—Type为<strong><em>*application ...</em></strong></p>
+                        <a class="btn primary xsmall" href="/mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html">more ...</a>
+                </div>
+        </div>
+        <hr />
         <div class="article">
                 <h1><a href="/first-doc.html">First Doc</a></h1>
                 <div class="well small"><footer class="post-info">
@@ -123,6 +166,11 @@
 <li>
 <a href="/category/blog.html">
     <i class="icon-folder-open icon-large"></i>Blog
+</a>
+</li>
+<li>
+<a href="/category/nodejs.html">
+    <i class="icon-folder-open icon-large"></i>Nodejs
 </a>
 </li>
 
