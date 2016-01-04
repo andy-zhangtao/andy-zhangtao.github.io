@@ -46,65 +46,71 @@ Status: Downloaded newer image &lt;span class="k"&gt;for&lt;/span&gt; ubuntu:15.
 &lt;p&gt;如果用户再下载另外一个基于Ubuntu15.04的Image，那么Docker就只会下载当前本地目录中没有的Layer数据，已经下载的这4个Layer则不会重复下载。&lt;/p&gt;
 &lt;p&gt;我们可以通过下面的实例来演示这个过程。&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;首先通过创建一个Dockerfile来引入Ubuntu15.04&lt;/p&gt;
-&lt;p&gt;```&lt;/p&gt;
-&lt;p&gt;FROM ubuntu:15.04&lt;/p&gt;
-&lt;p&gt;```&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;我们在新Image中的创建一个文件，并且写入Hello World。&lt;/p&gt;
-&lt;p&gt;```&lt;/p&gt;
-&lt;p&gt;FROM ubuntu:15.04&lt;/p&gt;
-&lt;p&gt;RUN echo "Hello world" &amp;gt; /tmp/newfile&lt;/p&gt;
-&lt;p&gt;```&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;保存Dockerfile。然后开始构建新Image：&lt;/p&gt;
-&lt;p&gt;```
-$ docker build -t changed-ubuntu .
-Sending build context to Docker daemon 2.048 kB
-Step 0 : FROM ubuntu:15.04
----&amp;gt; 013f3d01d247
-Step 1 : RUN echo "Hello world" &amp;gt; /tmp/newfile
----&amp;gt; Running in 2023460815df
----&amp;gt; 03b964f68d06
-Removing intermediate container 2023460815df
-Successfully built 03b964f68d06&lt;/p&gt;
-&lt;p&gt;```&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;通过Docker image命令，我们可以查看到构建成功的Image：&lt;/p&gt;
-&lt;p&gt;```
-REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE&lt;/p&gt;
-&lt;p&gt;changed-ubuntu      latest              03b964f68d06        33 seconds ago      131.4 MB  &lt;/p&gt;
-&lt;p&gt;``` &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;通过Docker history命令来查看当前Image所包含的Layer集合。&lt;/p&gt;
-&lt;p&gt;```
-$ docker history changed-ubuntu
-IMAGE               CREATED              CREATED BY                                    SIZE           COMMENT
-03b964f68d06        About a minute ago   /bin/sh -c echo "Hello world" &amp;gt; /tmp/newfile    12 B              &lt;br /&gt;
-013f3d01d247        6 weeks ago          /bin/sh -c #(nop) CMD ["/bin/bash"]             0 B               &lt;br /&gt;
-2bd276ed39d5        6 weeks ago          /bin/sh -c sed -i 's/^#\s&lt;em&gt;(deb.&lt;/em&gt;universe)$/   1.879 kB          &lt;br /&gt;
-13c0c663a321        6 weeks ago          /bin/sh -c echo '#!/bin/sh' &amp;gt; /usr/sbin/polic   701 B             &lt;br /&gt;
-6e6a100fa147        6 weeks ago          /bin/sh -c #(nop) ADD file:49710b44e2ae0edef4   131.4 MB            &lt;/p&gt;
-&lt;p&gt;``` &lt;/p&gt;
+&lt;li&gt;首先通过创建一个Dockerfile来引入Ubuntu15.04&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;FROM ubuntu:15.04
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;我们在新Image中的创建一个文件，并且写入Hello World。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;FROM ubuntu:15.04
+
+RUN echo &amp;quot;Hello world&amp;quot; &amp;gt; /tmp/newfile
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;保存Dockerfile。然后开始构建新Image：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    $ docker build -t changed-ubuntu .
+    Sending build context to Docker daemon 2.048 kB
+    Step 0 : FROM ubuntu:15.04
+    ---&amp;gt; 013f3d01d247
+    Step 1 : RUN echo &amp;quot;Hello world&amp;quot; &amp;gt; /tmp/newfile
+    ---&amp;gt; Running in 2023460815df
+    ---&amp;gt; 03b964f68d06
+    Removing intermediate container 2023460815df
+    Successfully built 03b964f68d06
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;通过Docker image命令，我们可以查看到构建成功的Image：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+
+changed-ubuntu      latest              03b964f68d06        33 seconds ago      131.4 MB  
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;通过Docker history命令来查看当前Image所包含的Layer集合。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    $ docker history changed-ubuntu
+    IMAGE               CREATED              CREATED BY                                    SIZE           COMMENT
+    03b964f68d06        About a minute ago   /bin/sh -c echo &amp;quot;Hello world&amp;quot; &amp;gt; /tmp/newfile    12 B                
+    013f3d01d247        6 weeks ago          /bin/sh -c #(nop) CMD [&amp;quot;/bin/bash&amp;quot;]             0 B                 
+    2bd276ed39d5        6 weeks ago          /bin/sh -c sed -i &amp;#39;s/^#\s*\(deb.*universe\)$/   1.879 kB            
+    13c0c663a321        6 weeks ago          /bin/sh -c echo &amp;#39;#!/bin/sh&amp;#39; &amp;gt; /usr/sbin/polic   701 B               
+    6e6a100fa147        6 weeks ago          /bin/sh -c #(nop) ADD file:49710b44e2ae0edef4   131.4 MB            
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;通过Docker history命令可以看到目前处于Layer集合最底层的Layer(03b964f68d06)就是我们通过"echo "Hello world" &amp;gt; /tmp/newfile"所创建的。 而其它四个Layer则是Ubuntu15.04所包含的4个Layer。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;我们通过查看目录来验证是否又单独拷贝了另外4个Layer。&lt;/p&gt;
-&lt;p&gt;```
-$ sudo ls /var/lib/docker/aufs/layers
-013f3d01d24738964bb7101fa83a926181d600ebecca7206dced59669e6e6778    2bd276ed39d5fcfd3d00ce0a190beeea508332f5aec3c6a125cc619a3fdbade6
-03b964f68d06a373933bd6d61d37610a34a355c168b08dfc604f57b20647e073    6e6a100fa147e6db53b684c8516e3e2588b160fd4898b6265545d5d4edb6796d
-13c0c663a321cd83a97f4ce1ecbaf17c2ba166527c3b06daaefe30695c5fcb8c&lt;/p&gt;
-&lt;p&gt;```&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;我们通过查看目录来验证是否又单独拷贝了另外4个Layer。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    $ sudo ls /var/lib/docker/aufs/layers
+    013f3d01d24738964bb7101fa83a926181d600ebecca7206dced59669e6e6778    2bd276ed39d5fcfd3d00ce0a190beeea508332f5aec3c6a125cc619a3fdbade6
+    03b964f68d06a373933bd6d61d37610a34a355c168b08dfc604f57b20647e073    6e6a100fa147e6db53b684c8516e3e2588b160fd4898b6265545d5d4edb6796d
+    13c0c663a321cd83a97f4ce1ecbaf17c2ba166527c3b06daaefe30695c5fcb8c
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;通过检查实际目录数据可以看到，当前文件系统中只有5个目录。因此，也就说明了，通过刚才的操作，虽然创建了一个新Image，但Docker并未完全拷贝所有Layer，而仅仅是创建了一个Layer。这个过程可以用下图来表示：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="image" src="https://lh3.googleusercontent.com/-I3jpGPoQeYM/VonUfB8x7iI/AAAAAAAAAA0/qx5XSS9nTrw/s757-Ic42/saving-space.jpg" /&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
 &lt;p&gt;通过COW策略，Docker可以高效利用磁盘空间，避免重复保存多余数据。&lt;/p&gt;
 &lt;h2&gt;通过COW策略可以高效使用Container&lt;/h2&gt;
 &lt;p&gt;我们在前面提到过，每一个Container最底层都有一个Thin R/W Layer。&lt;/p&gt;
