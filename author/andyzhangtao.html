@@ -90,7 +90,7 @@
       <div class="row">
         <div class="span9" id="content">
         <div class="article">
-                <h1><a href="/docker-storage.html">Docker storage</a></h1>
+                <h1><a href="/docker-ru-he-guan-li-imagecontainer.html">Docker 如何管理Image,Container</a></h1>
                 <div class="well small"><footer class="post-info">
 <span class="label">Date</span>
 <abbr class="published" title="2016-01-04T00:00:00+08:00">
@@ -116,7 +116,7 @@
 <img alt="image" src="https://lh3.googleusercontent.com/-D8MQPkSpeb8/VonUe0SEWKI/AAAAAAAAAAw/NXLg19gDpq4/s448-Ic42/image-layers.jpg" /></p>
 <p>当用户在这个Container中做任何写操作时，例如：在/tmp目录中新创建一个文件，Docker就会在这个集合最下面再创建一个文件层来保存这种变化。Docker当中每个文件层都有一个唯一ID(UUID)，并且每个文件层都会记录其所依赖的文件层信息。</p>
 <p>Image都是由Layers组成的，与此相对应的，所有的Container也同样是由Layers组成的。但Container与Image又一个本质区别，组成Image的Layer都是RO，而组成Container的Layer中，处于最低端的Layer是RW，其它Layer都是RO。这个RW的Layer，我们称之为Thin R/W Layer。如下图所示 ...</p>
-                        <a class="btn primary xsmall" href="/docker-storage.html">more ...</a>
+                        <a class="btn primary xsmall" href="/docker-ru-he-guan-li-imagecontainer.html">more ...</a>
                 </div>
         </div>
         <hr />

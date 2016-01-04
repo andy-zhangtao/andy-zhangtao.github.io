@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Docker 如何管理Image,Container</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="andy.zhangtao">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css" />
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      .tag-1 {
+        font-size: 13pt;
+      }
+      .tag-2 {
+        font-size: 10pt;
+      }
+      .tag-2 {
+        font-size: 8pt;
+      }
+      .tag-4 {
+        font-size: 6pt;
+     }
+    </style>
+    <link href="/theme/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="/theme/css/font-awesome.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/theme/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/theme/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/theme/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/theme/images/apple-touch-icon-114x114.png">
+
+    <link href="/" type="application/atom+xml" rel="alternate" title="andy's blog ATOM Feed" />
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/index.html">andy's blog </a>
+          <div class="nav-collapse">
+            <ul class="nav">
+                          <li class="divider-vertical"></li>
+                  <li class="active">
+                    <a href="/category/docker.html">
+						<i class="icon-folder-open icon-large"></i>Docker
+					</a>
+                  </li>
+                  <li >
+                    <a href="/category/nodejs.html">
+						<i class="icon-folder-open icon-large"></i>Nodejs
+					</a>
+                  </li>
+
+                          <ul class="nav pull-right">
+                                <li><a href="/archives.html"><i class="icon-th-list"></i>Archives</a></li>
+                          </ul>
+
+            </ul>
+            <!--<p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>-->
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="span9" id="content">
+<section id="content">
+        <article>
+                <header>
+                        <h1>
+                                <a href=""
+                                        rel="bookmark"
+                                        title="Permalink to Docker 如何管理Image,Container">
+                                        Docker 如何管理Image,Container
+                                </a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2016-01-04T00:00:00+08:00">
+        <i class="icon-calendar"></i>一 04 一月 2016
+</abbr>
+<span class="label">By</span>
+<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
+<span class="label">Category</span>
+<a href="/category/docker.html"><i class="icon-folder-open"></i>Docker</a>.
+
+
+</footer><!-- /.post-info -->                </div>
+                <h1>Docker 如何管理Image,Container？</h1>
+<p>在使用Docker之前，有一个问题始终无法回避：Docker如何高效的管理和使用Image和Container数据？
+为了搞明白这个问题，我们首先需要理解：</p>
+<ol>
+<li>Docker如何构建和存储Image？</li>
+<li>Docker如何基于Image来创建Container？</li>
+<li>Docker如何操作Image和Container？</li>
+</ol>
+<h2>Image和Container的基础 － Layers(文件层)</h2>
+<p>从数据结构上面来看，Docker当中所有的Image都是一系列<strong>有序</strong>只读(Read-Only)文件层(Layers)的集合。位于这个集合最顶端的文件层，我们称之为BaseImage。其它文件层都依赖于它。下图是一个Ubuntu15.04的Image示意图，这个Image包含了4个文件层。
+<img alt="image" src="https://lh3.googleusercontent.com/-D8MQPkSpeb8/VonUe0SEWKI/AAAAAAAAAAw/NXLg19gDpq4/s448-Ic42/image-layers.jpg" /></p>
+<p>当用户在这个Container中做任何写操作时，例如：在/tmp目录中新创建一个文件，Docker就会在这个集合最下面再创建一个文件层来保存这种变化。Docker当中每个文件层都有一个唯一ID(UUID)，并且每个文件层都会记录其所依赖的文件层信息。</p>
+<p>Image都是由Layers组成的，与此相对应的，所有的Container也同样是由Layers组成的。但Container与Image又一个本质区别，组成Image的Layer都是RO，而组成Container的Layer中，处于最低端的Layer是RW，其它Layer都是RO。这个RW的Layer，我们称之为Thin R/W Layer。如下图所示。</p>
+<p><img alt="image" src="https://lh3.googleusercontent.com/-z4JVQrV79zw/VonUe_iczQI/AAAAAAAAABE/KIr8ecUp4pM/s675-Ic42/container-layers.jpg" /></p>
+<p>Image和Container本质的区别就在于这个R/W Layer。在Container当中所发生的所有写操作，都会被如实的纪录在此Layer之中。当Container被删除之后，这个Layer也会被随之删除。而Container所依赖的Image Layer集合则不会被删除。因此，Container可以理解为：<strong>Container=Image＋RW Layer</strong>。</p>
+<p>而正因为每个Container都有一个唯一的RW Layer，这就意味着多个Container可以共享同一份Image，并且可以保存其各自数据。下图显示多个Container如何共享同一份Image。
+<img alt="image" src="https://lh3.googleusercontent.com/-QyW-QTY2if4/VonUgIVxhcI/AAAAAAAAABM/CCQeIem92IE/s769-Ic42/sharing-layers.jpg" /></p>
+<p>Docker通过两种技术来高效的使用Image和Container，一是：Layer依赖，二是：写时复制(Copy-on-Write)。本节当中，我们介绍的是Layer依赖。下节我们将会介绍写时复制。</p>
+<h2>写时复制(Copy-on-Write)</h2>
+<p>通过资源共享可以很好的利用当前资源。这种方式不仅仅发生在数字世界当中，在人类实际情况中也经常发生。</p>
+<p>例如：我们假设目前有一对双胞胎，阿猫和阿狗(权当他俩是双胞胎)。两个双胞胎在不同的班级上学，某一天两人的老师分别留了相同的作业。阿猫很快的写完了作业，而阿狗则贪玩没有写。第二天需要交作业时，因为是同一个老师上课，而俩人又不在同一个班级，因此交作业的时间就可以错开。阿猫先交作业，老师审核没问题，作业就还给了阿猫(我们假设老师没有做任何批改)。然后阿猫在下课时将作业给了阿狗，那么阿狗就可以使用同一份作业来糊弄老师。如此一来，两个人只写了一份作业，就通过了两次审核，为国家绿色环保做了贡献。</p>
+<p>写时复制就是上面过程的数字化。在写时复制策略中，需要数据的进程仅仅只需要使用目前已经存在的数据就可以，而不是在重新拷贝复制一份。只有这个进程需要修改数据了，才会单独拷贝一份，除此之外完全不需要单独保存数据。</p>
+<p>Docker通过COW策略来管理Image和Container数据。通过COW策略，Docker可以更高效的利用磁盘空间和网络带宽资源。下一节，我们来看看COW策略是如何在Docker中应用的。</p>
+<h2>COW在Docker中的应用</h2>
+<p>本节，我们聚焦于Docker如何通过COW策略来管理Image和Container。首先，我们引入两个命令:pull和push。 通过Docker pull命令，我们可以从远程仓库获取一个Image。例如下图所示：</p>
+<div class="highlight"><pre><span class="nv">$ </span>docker pull ubuntu:15.04
+15.04: Pulling from library/ubuntu
+6e6a100fa147: Pull <span class="nb">complete</span>
+13c0c663a321: Pull <span class="nb">complete</span>
+2bd276ed39d5: Pull <span class="nb">complete</span>
+013f3d01d247: Pull <span class="nb">complete</span>
+Digest: sha256:c7ecf33cef00ae34b131605c31486c91f5fd9a76315d075db2afd39d1ccdf3ed
+Status: Downloaded newer image <span class="k">for</span> ubuntu:15.04
+</pre></div>
+
+
+<p>通过命令输出可以看到，Ubuntu15.04包含有四个Layer。这四个Layer组合起来才是一个完整的Ubuntu15.04 Image。所有的Image数据都是保存在本地，默认情况下是在/var/lib/docker目录之中。取决于不同的存储驱动，数据保存在docker目录中不同的子目录之中。</p>
+<p>如果我们假设目前使用的是AUFS存储驱动，那么可以通过下面的命令来查看下载到的Layer数据：</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo ls /var/lib/docker/aufs/layers
+013f3d01d24738964bb7101fa83a926181d600ebecca7206dced59669e6e6778  2bd276ed39d5fcfd3d00ce0a190beeea508332f5aec3c6a125cc619a3fdbade6
+13c0c663a321cd83a97f4ce1ecbaf17c2ba166527c3b06daaefe30695c5fcb8c  6e6a100fa147e6db53b684c8516e3e2588b160fd4898b6265545d5d4edb6796d
+</pre></div>
+
+
+<p>如果用户再下载另外一个基于Ubuntu15.04的Image，那么Docker就只会下载当前本地目录中没有的Layer数据，已经下载的这4个Layer则不会重复下载。</p>
+<p>我们可以通过下面的实例来演示这个过程。</p>
+<ul>
+<li>首先通过创建一个Dockerfile来引入Ubuntu15.04</li>
+</ul>
+<div class="highlight"><pre>FROM ubuntu:15.04
+</pre></div>
+
+
+<ul>
+<li>我们在新Image中的创建一个文件，并且写入Hello World。</li>
+</ul>
+<div class="highlight"><pre>FROM ubuntu:15.04
+
+RUN echo &quot;Hello world&quot; &gt; /tmp/newfile
+</pre></div>
+
+
+<ul>
+<li>保存Dockerfile。然后开始构建新Image：</li>
+</ul>
+<div class="highlight"><pre>    $ docker build -t changed-ubuntu .
+    Sending build context to Docker daemon 2.048 kB
+    Step 0 : FROM ubuntu:15.04
+    ---&gt; 013f3d01d247
+    Step 1 : RUN echo &quot;Hello world&quot; &gt; /tmp/newfile
+    ---&gt; Running in 2023460815df
+    ---&gt; 03b964f68d06
+    Removing intermediate container 2023460815df
+    Successfully built 03b964f68d06
+</pre></div>
+
+
+<ul>
+<li>通过Docker image命令，我们可以查看到构建成功的Image：</li>
+</ul>
+<div class="highlight"><pre>REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+
+changed-ubuntu      latest              03b964f68d06        33 seconds ago      131.4 MB  
+</pre></div>
+
+
+<ul>
+<li>通过Docker history命令来查看当前Image所包含的Layer集合。</li>
+</ul>
+<div class="highlight"><pre>    $ docker history changed-ubuntu
+    IMAGE               CREATED              CREATED BY                                    SIZE           COMMENT
+    03b964f68d06        About a minute ago   /bin/sh -c echo &quot;Hello world&quot; &gt; /tmp/newfile    12 B                
+    013f3d01d247        6 weeks ago          /bin/sh -c #(nop) CMD [&quot;/bin/bash&quot;]             0 B                 
+    2bd276ed39d5        6 weeks ago          /bin/sh -c sed -i &#39;s/^#\s*\(deb.*universe\)$/   1.879 kB            
+    13c0c663a321        6 weeks ago          /bin/sh -c echo &#39;#!/bin/sh&#39; &gt; /usr/sbin/polic   701 B               
+    6e6a100fa147        6 weeks ago          /bin/sh -c #(nop) ADD file:49710b44e2ae0edef4   131.4 MB            
+</pre></div>
+
+
+<p>通过Docker history命令可以看到目前处于Layer集合最底层的Layer(03b964f68d06)就是我们通过"echo "Hello world" &gt; /tmp/newfile"所创建的。 而其它四个Layer则是Ubuntu15.04所包含的4个Layer。</p>
+<ul>
+<li>我们通过查看目录来验证是否又单独拷贝了另外4个Layer。</li>
+</ul>
+<div class="highlight"><pre>    $ sudo ls /var/lib/docker/aufs/layers
+    013f3d01d24738964bb7101fa83a926181d600ebecca7206dced59669e6e6778    2bd276ed39d5fcfd3d00ce0a190beeea508332f5aec3c6a125cc619a3fdbade6
+    03b964f68d06a373933bd6d61d37610a34a355c168b08dfc604f57b20647e073    6e6a100fa147e6db53b684c8516e3e2588b160fd4898b6265545d5d4edb6796d
+    13c0c663a321cd83a97f4ce1ecbaf17c2ba166527c3b06daaefe30695c5fcb8c
+</pre></div>
+
+
+<p>通过检查实际目录数据可以看到，当前文件系统中只有5个目录。因此，也就说明了，通过刚才的操作，虽然创建了一个新Image，但Docker并未完全拷贝所有Layer，而仅仅是创建了一个Layer。这个过程可以用下图来表示：</p>
+<p><img alt="image" src="https://lh3.googleusercontent.com/-I3jpGPoQeYM/VonUfB8x7iI/AAAAAAAAAA0/qx5XSS9nTrw/s757-Ic42/saving-space.jpg" /></p>
+<p>通过COW策略，Docker可以高效利用磁盘空间，避免重复保存多余数据。</p>
+<h2>通过COW策略可以高效使用Container</h2>
+<p>我们在前面提到过，每一个Container最底层都有一个Thin R/W Layer。</p>
+<p><img alt="image" src="https://lh3.googleusercontent.com/-z4JVQrV79zw/VonUe_iczQI/AAAAAAAAABE/KIr8ecUp4pM/s675-Ic42/container-layers.jpg" /></p>
+<p>Container当中所有的写操作都被保存在这个Layer之中，而其它RO Layer则无法被修改。通过这种策略，多个Container可以共享使用同一份Layer集合。下图演示同时基于Ubuntu15.04创建多个Container，每个Container都有各自的RW Layer。</p>
+<p><img alt="image" src="https://lh3.googleusercontent.com/-QyW-QTY2if4/VonUgIVxhcI/AAAAAAAAABM/CCQeIem92IE/s769-Ic42/sharing-layers.jpg" />       </p>
+<p>当容器当中发生写操作时，Docker会触发一个COW操作。具体的COW处理则依赖于具体的存储驱动，AUFS和BTFS的处理方式就各不相同。</p>
+<p>如果容器需要保存大量数据，那么Docker推荐将这些数据通过data volume来保存，而不建议直接将这些数据写入RW Layer。因为通过COW操作来保存数据时，会出现明显的性能下降。而下降的程度则取决于当前Docker所使用的存储驱动方式。通常来说，保存大文件，保存多个Layer和保存多层级的目录树都会引起性能下降。但目前来说，这些性能下降只会发生在第一次操作时，当以后对相同文件进行操作时将不会再次触发COW操作。</p>
+<h2>如何使用Data Volume</h2>
+<p>之前提过，当一个容器删除时，容器中所使用的R/W Layer也会随之被删除。那么容器中所产生的数据也会消失。如果用户需要保存这些数据，Docker建议使用Data Volume。</p>
+<p><strong>Data Volume是一个直接挂载到Container之中的目录或者文件。</strong></p>
+<p>Data Volume不会被存储驱动所控制，这就意味着所有对Data Volume的读写操作都将跳过存储驱动，而直接通过host OS来完成。用户可以挂载任意多个data volume到一个container之中，也可以多个container共享同一份data volume。</p>
+<p>下图演示了两个Container同时挂载同一个Data Volume目录。</p>
+<p><img alt="image" src="https://lh3.googleusercontent.com/-uuuZMYFkWQk/VonUfwIIjYI/AAAAAAAAABI/FU8sZlZ3lsU/s757-Ic42/shared-volume.jpg" /></p>
+<p>通过Data Volume可以减轻Container的"重量"，也可以当删除容器时保存其中有价值的数据。</p>
+                </div><!-- /.entry-content -->
+                <div class="comments">
+                <h2>Comments !</h2>
+                        <div id="disqus_thread"></div>
+                        <script type="text/javascript">
+                           var disqus_identifier = "docker-ru-he-guan-li-imagecontainer.html";
+                           (function() {
+                                var dsq = document.createElement('script');
+                                dsq.type = 'text/javascript'; dsq.async = true;
+                                dsq.src = 'http://andy-s-blog.disqus.com/embed.js';
+                                (document.getElementsByTagName('head')[0] ||
+                                 document.getElementsByTagName('body')[0]).appendChild(dsq);
+                          })();
+                        </script>
+                </div>
+        </article>
+</section>
+        </div><!--/span-->
+
+                <div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+<li class="nav-header"><h4><i class="icon-external-link"></i>blogroll</h4></li>
+    <li><a href="http://getpelican.com/"><i class="icon-external-link"></i>Pelican</a></li>
+    <li><a href="http://python.org/"><i class="icon-external-link"></i>Python.org</a></li>
+    <li><a href="http://jinja.pocoo.org/"><i class="icon-external-link"></i>Jinja2</a></li>
+    <li><a href="#"><i class="icon-external-link"></i>You can modify those links in your config file</a></li>
+<li class="nav-header"><h4><i class="icon-home icon-large"></i> social</h4></li>
+<li><a href="/" rel="alternate"><i class="icon-bookmark icon-large"></i>atom feed</a></li>
+    <li><a href="#"><i class="icon-You can add links in your config file-sign icon-large"></i>You can add links in your config file</a></li>
+    <li><a href="#"><i class="icon-Another social link-sign icon-large"></i>Another social link</a></li>
+
+<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>
+<li>
+<a href="/category/docker.html">
+    <i class="icon-folder-open icon-large"></i>Docker
+</a>
+</li>
+<li>
+<a href="/category/nodejs.html">
+    <i class="icon-folder-open icon-large"></i>Nodejs
+</a>
+</li>
+
+<li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
+
+
+</ul>        </div><!--/.well -->
+
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <address id="about">
+                Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican <i class="icon-external-link"></i></a>,
+                                which takes great advantage of <a href="http://python.org">Python <i class="icon-external-link"></i></a>.
+        </address><!-- /#about -->
+
+        <p>The theme is from <a href="http://twitter.github.com/bootstrap/">Bootstrap from Twitter <i class="icon-external-link"></i></a>,
+                   and <a href="http://fortawesome.github.com/Font-Awesome/">Font-Awesome <i class="icon-external-link"></i></a>, thanks!</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+	var pageTracker = _gat._getTracker("UA-71897460-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<script type="text/javascript">
+    var disqus_shortname = 'andy-s-blog';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+
+    <!-- Le javascript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/theme/js/jquery-1.7.2.min.js"></script>
+    <script src="/theme/js/bootstrap.min.js"></script>
+  </body>
+</html>
