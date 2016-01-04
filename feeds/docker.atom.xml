@@ -1,131 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>andy's blog</title><link href="/" rel="alternate"></link><link href="/feeds/docker.atom.xml" rel="self"></link><id>/</id><updated>2016-01-04T00:00:00+08:00</updated><entry><title>Docker 如何管理Image,Container</title><link href="/docker-ru-he-guan-li-imagecontainer.html" rel="alternate"></link><updated>2016-01-04T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-04:docker-ru-he-guan-li-imagecontainer.html</id><summary type="html">&lt;h1&gt;Docker 如何管理Image,Container？&lt;/h1&gt;
-&lt;p&gt;在使用Docker之前，有一个问题始终无法回避：Docker如何高效的管理和使用Image和Container数据？
-为了搞明白这个问题，我们首先需要理解：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Docker如何构建和存储Image？&lt;/li&gt;
-&lt;li&gt;Docker如何基于Image来创建Container？&lt;/li&gt;
-&lt;li&gt;Docker如何操作Image和Container？&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2&gt;Image和Container的基础 － Layers(文件层)&lt;/h2&gt;
-&lt;p&gt;从数据结构上面来看，Docker当中所有的Image都是一系列&lt;strong&gt;有序&lt;/strong&gt;只读(Read-Only)文件层(Layers)的集合。位于这个集合最顶端的文件层，我们称之为BaseImage。其它文件层都依赖于它。下图是一个Ubuntu15.04的Image示意图，这个Image包含了4个文件层。
-&lt;img alt="image" src="https://lh3.googleusercontent.com/-D8MQPkSpeb8/VonUe0SEWKI/AAAAAAAAAAw/NXLg19gDpq4/s448-Ic42/image-layers.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;当用户在这个Container中做任何写操作时，例如：在/tmp目录中新创建一个文件，Docker就会在这个集合最下面再创建一个文件层来保存这种变化。Docker当中每个文件层都有一个唯一ID(UUID)，并且每个文件层都会记录其所依赖的文件层信息。&lt;/p&gt;
-&lt;p&gt;Image都是由Layers组成的，与此相对应的，所有的Container也同样是由Layers组成的。但Container与Image又一个本质区别，组成Image的Layer都是RO，而组成Container的Layer中，处于最低端的Layer是RW，其它Layer都是RO。这个RW的Layer，我们称之为Thin R/W Layer。如下图所示。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="image" src="https://lh3.googleusercontent.com/-z4JVQrV79zw/VonUe_iczQI/AAAAAAAAABE/KIr8ecUp4pM/s675-Ic42/container-layers.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;Image和Container本质的区别就在于这个R/W Layer。在Container当中所发生的所有写操作，都会被如实的纪录在此Layer之中。当Container被删除之后，这个Layer也会被随之删除。而Container所依赖的Image Layer集合则不会被删除。因此，Container可以理解为：&lt;strong&gt;Container=Image＋RW Layer&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;而正因为每个Container都有一个唯一的RW Layer，这就意味着多个Container可以共享同一份Image，并且可以保存其各自数据。下图显示多个Container如何共享同一份Image。
-&lt;img alt="image" src="https://lh3.googleusercontent.com/-QyW-QTY2if4/VonUgIVxhcI/AAAAAAAAABM/CCQeIem92IE/s769-Ic42/sharing-layers.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;Docker通过两种技术来高效的使用Image和Container，一是：Layer依赖，二是：写时复制(Copy-on-Write)。本节当中，我们介绍的是Layer依赖。下节我们将会介绍写时复制。&lt;/p&gt;
-&lt;h2&gt;写时复制(Copy-on-Write)&lt;/h2&gt;
-&lt;p&gt;通过资源共享可以很好的利用当前资源。这种方式不仅仅发生在数字世界当中，在人类实际情况中也经常发生。&lt;/p&gt;
-&lt;p&gt;例如：我们假设目前有一对双胞胎，阿猫和阿狗(权当他俩是双胞胎)。两个双胞胎在不同的班级上学，某一天两人的老师分别留了相同的作业。阿猫很快的写完了作业，而阿狗则贪玩没有写。第二天需要交作业时，因为是同一个老师上课，而俩人又不在同一个班级，因此交作业的时间就可以错开。阿猫先交作业，老师审核没问题，作业就还给了阿猫(我们假设老师没有做任何批改)。然后阿猫在下课时将作业给了阿狗，那么阿狗就可以使用同一份作业来糊弄老师。如此一来，两个人只写了一份作业，就通过了两次审核，为国家绿色环保做了贡献。&lt;/p&gt;
-&lt;p&gt;写时复制就是上面过程的数字化。在写时复制策略中，需要数据的进程仅仅只需要使用目前已经存在的数据就可以，而不是在重新拷贝复制一份。只有这个进程需要修改数据了，才会单独拷贝一份，除此之外完全不需要单独保存数据。&lt;/p&gt;
-&lt;p&gt;Docker通过COW策略来管理Image和Container数据。通过COW策略，Docker可以更高效的利用磁盘空间和网络带宽资源。下一节，我们来看看COW策略是如何在Docker中应用的。&lt;/p&gt;
-&lt;h2&gt;COW在Docker中的应用&lt;/h2&gt;
-&lt;p&gt;本节，我们聚焦于Docker如何通过COW策略来管理Image和Container。首先，我们引入两个命令:pull和push。 通过Docker pull命令，我们可以从远程仓库获取一个Image。例如下图所示：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;docker pull ubuntu:15.04
-15.04: Pulling from library/ubuntu
-6e6a100fa147: Pull &lt;span class="nb"&gt;complete&lt;/span&gt;
-13c0c663a321: Pull &lt;span class="nb"&gt;complete&lt;/span&gt;
-2bd276ed39d5: Pull &lt;span class="nb"&gt;complete&lt;/span&gt;
-013f3d01d247: Pull &lt;span class="nb"&gt;complete&lt;/span&gt;
-Digest: sha256:c7ecf33cef00ae34b131605c31486c91f5fd9a76315d075db2afd39d1ccdf3ed
-Status: Downloaded newer image &lt;span class="k"&gt;for&lt;/span&gt; ubuntu:15.04
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;通过命令输出可以看到，Ubuntu15.04包含有四个Layer。这四个Layer组合起来才是一个完整的Ubuntu15.04 Image。所有的Image数据都是保存在本地，默认情况下是在/var/lib/docker目录之中。取决于不同的存储驱动，数据保存在docker目录中不同的子目录之中。&lt;/p&gt;
-&lt;p&gt;如果我们假设目前使用的是AUFS存储驱动，那么可以通过下面的命令来查看下载到的Layer数据：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo ls /var/lib/docker/aufs/layers
-013f3d01d24738964bb7101fa83a926181d600ebecca7206dced59669e6e6778  2bd276ed39d5fcfd3d00ce0a190beeea508332f5aec3c6a125cc619a3fdbade6
-13c0c663a321cd83a97f4ce1ecbaf17c2ba166527c3b06daaefe30695c5fcb8c  6e6a100fa147e6db53b684c8516e3e2588b160fd4898b6265545d5d4edb6796d
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;如果用户再下载另外一个基于Ubuntu15.04的Image，那么Docker就只会下载当前本地目录中没有的Layer数据，已经下载的这4个Layer则不会重复下载。&lt;/p&gt;
-&lt;p&gt;我们可以通过下面的实例来演示这个过程。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;首先通过创建一个Dockerfile来引入Ubuntu15.04&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;FROM ubuntu:15.04
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;ul&gt;
-&lt;li&gt;我们在新Image中的创建一个文件，并且写入Hello World。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;FROM ubuntu:15.04
-
-RUN echo &amp;quot;Hello world&amp;quot; &amp;gt; /tmp/newfile
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;ul&gt;
-&lt;li&gt;保存Dockerfile。然后开始构建新Image：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;    $ docker build -t changed-ubuntu .
-    Sending build context to Docker daemon 2.048 kB
-    Step 0 : FROM ubuntu:15.04
-    ---&amp;gt; 013f3d01d247
-    Step 1 : RUN echo &amp;quot;Hello world&amp;quot; &amp;gt; /tmp/newfile
-    ---&amp;gt; Running in 2023460815df
-    ---&amp;gt; 03b964f68d06
-    Removing intermediate container 2023460815df
-    Successfully built 03b964f68d06
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;ul&gt;
-&lt;li&gt;通过Docker image命令，我们可以查看到构建成功的Image：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-
-changed-ubuntu      latest              03b964f68d06        33 seconds ago      131.4 MB  
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;ul&gt;
-&lt;li&gt;通过Docker history命令来查看当前Image所包含的Layer集合。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;    $ docker history changed-ubuntu
-    IMAGE               CREATED              CREATED BY                                    SIZE           COMMENT
-    03b964f68d06        About a minute ago   /bin/sh -c echo &amp;quot;Hello world&amp;quot; &amp;gt; /tmp/newfile    12 B                
-    013f3d01d247        6 weeks ago          /bin/sh -c #(nop) CMD [&amp;quot;/bin/bash&amp;quot;]             0 B                 
-    2bd276ed39d5        6 weeks ago          /bin/sh -c sed -i &amp;#39;s/^#\s*\(deb.*universe\)$/   1.879 kB            
-    13c0c663a321        6 weeks ago          /bin/sh -c echo &amp;#39;#!/bin/sh&amp;#39; &amp;gt; /usr/sbin/polic   701 B               
-    6e6a100fa147        6 weeks ago          /bin/sh -c #(nop) ADD file:49710b44e2ae0edef4   131.4 MB            
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;通过Docker history命令可以看到目前处于Layer集合最底层的Layer(03b964f68d06)就是我们通过"echo "Hello world" &amp;gt; /tmp/newfile"所创建的。 而其它四个Layer则是Ubuntu15.04所包含的4个Layer。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;我们通过查看目录来验证是否又单独拷贝了另外4个Layer。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;    $ sudo ls /var/lib/docker/aufs/layers
-    013f3d01d24738964bb7101fa83a926181d600ebecca7206dced59669e6e6778    2bd276ed39d5fcfd3d00ce0a190beeea508332f5aec3c6a125cc619a3fdbade6
-    03b964f68d06a373933bd6d61d37610a34a355c168b08dfc604f57b20647e073    6e6a100fa147e6db53b684c8516e3e2588b160fd4898b6265545d5d4edb6796d
-    13c0c663a321cd83a97f4ce1ecbaf17c2ba166527c3b06daaefe30695c5fcb8c
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;通过检查实际目录数据可以看到，当前文件系统中只有5个目录。因此，也就说明了，通过刚才的操作，虽然创建了一个新Image，但Docker并未完全拷贝所有Layer，而仅仅是创建了一个Layer。这个过程可以用下图来表示：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="image" src="https://lh3.googleusercontent.com/-I3jpGPoQeYM/VonUfB8x7iI/AAAAAAAAAA0/qx5XSS9nTrw/s757-Ic42/saving-space.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;通过COW策略，Docker可以高效利用磁盘空间，避免重复保存多余数据。&lt;/p&gt;
-&lt;h2&gt;通过COW策略可以高效使用Container&lt;/h2&gt;
-&lt;p&gt;我们在前面提到过，每一个Container最底层都有一个Thin R/W Layer。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="image" src="https://lh3.googleusercontent.com/-z4JVQrV79zw/VonUe_iczQI/AAAAAAAAABE/KIr8ecUp4pM/s675-Ic42/container-layers.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;Container当中所有的写操作都被保存在这个Layer之中，而其它RO Layer则无法被修改。通过这种策略，多个Container可以共享使用同一份Layer集合。下图演示同时基于Ubuntu15.04创建多个Container，每个Container都有各自的RW Layer。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="image" src="https://lh3.googleusercontent.com/-QyW-QTY2if4/VonUgIVxhcI/AAAAAAAAABM/CCQeIem92IE/s769-Ic42/sharing-layers.jpg" /&gt;       &lt;/p&gt;
-&lt;p&gt;当容器当中发生写操作时，Docker会触发一个COW操作。具体的COW处理则依赖于具体的存储驱动，AUFS和BTFS的处理方式就各不相同。&lt;/p&gt;
-&lt;p&gt;如果容器需要保存大量数据，那么Docker推荐将这些数据通过data volume来保存，而不建议直接将这些数据写入RW Layer。因为通过COW操作来保存数据时，会出现明显的性能下降。而下降的程度则取决于当前Docker所使用的存储驱动方式。通常来说，保存大文件，保存多个Layer和保存多层级的目录树都会引起性能下降。但目前来说，这些性能下降只会发生在第一次操作时，当以后对相同文件进行操作时将不会再次触发COW操作。&lt;/p&gt;
-&lt;h2&gt;如何使用Data Volume&lt;/h2&gt;
-&lt;p&gt;之前提过，当一个容器删除时，容器中所使用的R/W Layer也会随之被删除。那么容器中所产生的数据也会消失。如果用户需要保存这些数据，Docker建议使用Data Volume。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Data Volume是一个直接挂载到Container之中的目录或者文件。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Data Volume不会被存储驱动所控制，这就意味着所有对Data Volume的读写操作都将跳过存储驱动，而直接通过host OS来完成。用户可以挂载任意多个data volume到一个container之中，也可以多个container共享同一份data volume。&lt;/p&gt;
-&lt;p&gt;下图演示了两个Container同时挂载同一个Data Volume目录。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="image" src="https://lh3.googleusercontent.com/-uuuZMYFkWQk/VonUfwIIjYI/AAAAAAAAABI/FU8sZlZ3lsU/s757-Ic42/shared-volume.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;通过Data Volume可以减轻Container的"重量"，也可以当删除容器时保存其中有价值的数据。&lt;/p&gt;</summary></entry><entry><title>Docker输出日志的几种方式</title><link href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html" rel="alternate"></link><updated>2016-01-04T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-04:dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html</id><summary type="html">&lt;h1&gt;Docker输出日志的几种方式&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>andy's blog</title><link href="/" rel="alternate"></link><link href="/feeds/docker.atom.xml" rel="self"></link><id>/</id><updated>2016-01-04T21:51:00+08:00</updated><entry><title>Docker输出日志的几种方式</title><link href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html" rel="alternate"></link><updated>2016-01-04T21:51:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-04:dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html</id><summary type="html">&lt;h1&gt;Docker输出日志的几种方式&lt;/h1&gt;
 &lt;p&gt;在使用Docker过程中，查看日志是必不可少的一项工作。通过Docker提供的docker logs命令可以查看指定容器所输出的日志。但此命令有一些限制范围，当前docker logs命令仅仅只能支持json-file,journald这两种日志驱动，如果container使用其它类型的日志驱动，那么logs命令将无法提取日志。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;那么如何查看容器所输出的日志呢？&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;为了解决这个问题，我们首先来看看Docker都支持哪些类型的日志驱动。&lt;/p&gt;
@@ -285,4 +159,130 @@ changed-ubuntu      latest              03b964f68d06        33 seconds ago      
 &lt;div class="highlight"&gt;&lt;pre&gt;--log-opt awslogs-region=&amp;lt;aws_region&amp;gt;
 --log-opt awslogs-group=&amp;lt;log_group_name&amp;gt;
 --log-opt awslogs-stream=&amp;lt;log_stream_name&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;</summary></entry></feed>
+&lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>Docker 如何管理Image,Container</title><link href="/docker-ru-he-guan-li-imagecontainer.html" rel="alternate"></link><updated>2016-01-04T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-04:docker-ru-he-guan-li-imagecontainer.html</id><summary type="html">&lt;h1&gt;Docker 如何管理Image,Container？&lt;/h1&gt;
+&lt;p&gt;在使用Docker之前，有一个问题始终无法回避：Docker如何高效的管理和使用Image和Container数据？
+为了搞明白这个问题，我们首先需要理解：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Docker如何构建和存储Image？&lt;/li&gt;
+&lt;li&gt;Docker如何基于Image来创建Container？&lt;/li&gt;
+&lt;li&gt;Docker如何操作Image和Container？&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Image和Container的基础 － Layers(文件层)&lt;/h2&gt;
+&lt;p&gt;从数据结构上面来看，Docker当中所有的Image都是一系列&lt;strong&gt;有序&lt;/strong&gt;只读(Read-Only)文件层(Layers)的集合。位于这个集合最顶端的文件层，我们称之为BaseImage。其它文件层都依赖于它。下图是一个Ubuntu15.04的Image示意图，这个Image包含了4个文件层。
+&lt;img alt="image" src="https://lh3.googleusercontent.com/-D8MQPkSpeb8/VonUe0SEWKI/AAAAAAAAAAw/NXLg19gDpq4/s448-Ic42/image-layers.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;当用户在这个Container中做任何写操作时，例如：在/tmp目录中新创建一个文件，Docker就会在这个集合最下面再创建一个文件层来保存这种变化。Docker当中每个文件层都有一个唯一ID(UUID)，并且每个文件层都会记录其所依赖的文件层信息。&lt;/p&gt;
+&lt;p&gt;Image都是由Layers组成的，与此相对应的，所有的Container也同样是由Layers组成的。但Container与Image又一个本质区别，组成Image的Layer都是RO，而组成Container的Layer中，处于最低端的Layer是RW，其它Layer都是RO。这个RW的Layer，我们称之为Thin R/W Layer。如下图所示。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="https://lh3.googleusercontent.com/-z4JVQrV79zw/VonUe_iczQI/AAAAAAAAABE/KIr8ecUp4pM/s675-Ic42/container-layers.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;Image和Container本质的区别就在于这个R/W Layer。在Container当中所发生的所有写操作，都会被如实的纪录在此Layer之中。当Container被删除之后，这个Layer也会被随之删除。而Container所依赖的Image Layer集合则不会被删除。因此，Container可以理解为：&lt;strong&gt;Container=Image＋RW Layer&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;而正因为每个Container都有一个唯一的RW Layer，这就意味着多个Container可以共享同一份Image，并且可以保存其各自数据。下图显示多个Container如何共享同一份Image。
+&lt;img alt="image" src="https://lh3.googleusercontent.com/-QyW-QTY2if4/VonUgIVxhcI/AAAAAAAAABM/CCQeIem92IE/s769-Ic42/sharing-layers.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;Docker通过两种技术来高效的使用Image和Container，一是：Layer依赖，二是：写时复制(Copy-on-Write)。本节当中，我们介绍的是Layer依赖。下节我们将会介绍写时复制。&lt;/p&gt;
+&lt;h2&gt;写时复制(Copy-on-Write)&lt;/h2&gt;
+&lt;p&gt;通过资源共享可以很好的利用当前资源。这种方式不仅仅发生在数字世界当中，在人类实际情况中也经常发生。&lt;/p&gt;
+&lt;p&gt;例如：我们假设目前有一对双胞胎，阿猫和阿狗(权当他俩是双胞胎)。两个双胞胎在不同的班级上学，某一天两人的老师分别留了相同的作业。阿猫很快的写完了作业，而阿狗则贪玩没有写。第二天需要交作业时，因为是同一个老师上课，而俩人又不在同一个班级，因此交作业的时间就可以错开。阿猫先交作业，老师审核没问题，作业就还给了阿猫(我们假设老师没有做任何批改)。然后阿猫在下课时将作业给了阿狗，那么阿狗就可以使用同一份作业来糊弄老师。如此一来，两个人只写了一份作业，就通过了两次审核，为国家绿色环保做了贡献。&lt;/p&gt;
+&lt;p&gt;写时复制就是上面过程的数字化。在写时复制策略中，需要数据的进程仅仅只需要使用目前已经存在的数据就可以，而不是在重新拷贝复制一份。只有这个进程需要修改数据了，才会单独拷贝一份，除此之外完全不需要单独保存数据。&lt;/p&gt;
+&lt;p&gt;Docker通过COW策略来管理Image和Container数据。通过COW策略，Docker可以更高效的利用磁盘空间和网络带宽资源。下一节，我们来看看COW策略是如何在Docker中应用的。&lt;/p&gt;
+&lt;h2&gt;COW在Docker中的应用&lt;/h2&gt;
+&lt;p&gt;本节，我们聚焦于Docker如何通过COW策略来管理Image和Container。首先，我们引入两个命令:pull和push。 通过Docker pull命令，我们可以从远程仓库获取一个Image。例如下图所示：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;docker pull ubuntu:15.04
+15.04: Pulling from library/ubuntu
+6e6a100fa147: Pull &lt;span class="nb"&gt;complete&lt;/span&gt;
+13c0c663a321: Pull &lt;span class="nb"&gt;complete&lt;/span&gt;
+2bd276ed39d5: Pull &lt;span class="nb"&gt;complete&lt;/span&gt;
+013f3d01d247: Pull &lt;span class="nb"&gt;complete&lt;/span&gt;
+Digest: sha256:c7ecf33cef00ae34b131605c31486c91f5fd9a76315d075db2afd39d1ccdf3ed
+Status: Downloaded newer image &lt;span class="k"&gt;for&lt;/span&gt; ubuntu:15.04
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;通过命令输出可以看到，Ubuntu15.04包含有四个Layer。这四个Layer组合起来才是一个完整的Ubuntu15.04 Image。所有的Image数据都是保存在本地，默认情况下是在/var/lib/docker目录之中。取决于不同的存储驱动，数据保存在docker目录中不同的子目录之中。&lt;/p&gt;
+&lt;p&gt;如果我们假设目前使用的是AUFS存储驱动，那么可以通过下面的命令来查看下载到的Layer数据：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo ls /var/lib/docker/aufs/layers
+013f3d01d24738964bb7101fa83a926181d600ebecca7206dced59669e6e6778  2bd276ed39d5fcfd3d00ce0a190beeea508332f5aec3c6a125cc619a3fdbade6
+13c0c663a321cd83a97f4ce1ecbaf17c2ba166527c3b06daaefe30695c5fcb8c  6e6a100fa147e6db53b684c8516e3e2588b160fd4898b6265545d5d4edb6796d
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果用户再下载另外一个基于Ubuntu15.04的Image，那么Docker就只会下载当前本地目录中没有的Layer数据，已经下载的这4个Layer则不会重复下载。&lt;/p&gt;
+&lt;p&gt;我们可以通过下面的实例来演示这个过程。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;首先通过创建一个Dockerfile来引入Ubuntu15.04&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;FROM ubuntu:15.04
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;我们在新Image中的创建一个文件，并且写入Hello World。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;FROM ubuntu:15.04
+
+RUN echo &amp;quot;Hello world&amp;quot; &amp;gt; /tmp/newfile
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;保存Dockerfile。然后开始构建新Image：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    $ docker build -t changed-ubuntu .
+    Sending build context to Docker daemon 2.048 kB
+    Step 0 : FROM ubuntu:15.04
+    ---&amp;gt; 013f3d01d247
+    Step 1 : RUN echo &amp;quot;Hello world&amp;quot; &amp;gt; /tmp/newfile
+    ---&amp;gt; Running in 2023460815df
+    ---&amp;gt; 03b964f68d06
+    Removing intermediate container 2023460815df
+    Successfully built 03b964f68d06
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;通过Docker image命令，我们可以查看到构建成功的Image：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+
+changed-ubuntu      latest              03b964f68d06        33 seconds ago      131.4 MB  
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;通过Docker history命令来查看当前Image所包含的Layer集合。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    $ docker history changed-ubuntu
+    IMAGE               CREATED              CREATED BY                                    SIZE           COMMENT
+    03b964f68d06        About a minute ago   /bin/sh -c echo &amp;quot;Hello world&amp;quot; &amp;gt; /tmp/newfile    12 B                
+    013f3d01d247        6 weeks ago          /bin/sh -c #(nop) CMD [&amp;quot;/bin/bash&amp;quot;]             0 B                 
+    2bd276ed39d5        6 weeks ago          /bin/sh -c sed -i &amp;#39;s/^#\s*\(deb.*universe\)$/   1.879 kB            
+    13c0c663a321        6 weeks ago          /bin/sh -c echo &amp;#39;#!/bin/sh&amp;#39; &amp;gt; /usr/sbin/polic   701 B               
+    6e6a100fa147        6 weeks ago          /bin/sh -c #(nop) ADD file:49710b44e2ae0edef4   131.4 MB            
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;通过Docker history命令可以看到目前处于Layer集合最底层的Layer(03b964f68d06)就是我们通过"echo "Hello world" &amp;gt; /tmp/newfile"所创建的。 而其它四个Layer则是Ubuntu15.04所包含的4个Layer。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;我们通过查看目录来验证是否又单独拷贝了另外4个Layer。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    $ sudo ls /var/lib/docker/aufs/layers
+    013f3d01d24738964bb7101fa83a926181d600ebecca7206dced59669e6e6778    2bd276ed39d5fcfd3d00ce0a190beeea508332f5aec3c6a125cc619a3fdbade6
+    03b964f68d06a373933bd6d61d37610a34a355c168b08dfc604f57b20647e073    6e6a100fa147e6db53b684c8516e3e2588b160fd4898b6265545d5d4edb6796d
+    13c0c663a321cd83a97f4ce1ecbaf17c2ba166527c3b06daaefe30695c5fcb8c
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;通过检查实际目录数据可以看到，当前文件系统中只有5个目录。因此，也就说明了，通过刚才的操作，虽然创建了一个新Image，但Docker并未完全拷贝所有Layer，而仅仅是创建了一个Layer。这个过程可以用下图来表示：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="https://lh3.googleusercontent.com/-I3jpGPoQeYM/VonUfB8x7iI/AAAAAAAAAA0/qx5XSS9nTrw/s757-Ic42/saving-space.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;通过COW策略，Docker可以高效利用磁盘空间，避免重复保存多余数据。&lt;/p&gt;
+&lt;h2&gt;通过COW策略可以高效使用Container&lt;/h2&gt;
+&lt;p&gt;我们在前面提到过，每一个Container最底层都有一个Thin R/W Layer。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="https://lh3.googleusercontent.com/-z4JVQrV79zw/VonUe_iczQI/AAAAAAAAABE/KIr8ecUp4pM/s675-Ic42/container-layers.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;Container当中所有的写操作都被保存在这个Layer之中，而其它RO Layer则无法被修改。通过这种策略，多个Container可以共享使用同一份Layer集合。下图演示同时基于Ubuntu15.04创建多个Container，每个Container都有各自的RW Layer。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="https://lh3.googleusercontent.com/-QyW-QTY2if4/VonUgIVxhcI/AAAAAAAAABM/CCQeIem92IE/s769-Ic42/sharing-layers.jpg" /&gt;       &lt;/p&gt;
+&lt;p&gt;当容器当中发生写操作时，Docker会触发一个COW操作。具体的COW处理则依赖于具体的存储驱动，AUFS和BTFS的处理方式就各不相同。&lt;/p&gt;
+&lt;p&gt;如果容器需要保存大量数据，那么Docker推荐将这些数据通过data volume来保存，而不建议直接将这些数据写入RW Layer。因为通过COW操作来保存数据时，会出现明显的性能下降。而下降的程度则取决于当前Docker所使用的存储驱动方式。通常来说，保存大文件，保存多个Layer和保存多层级的目录树都会引起性能下降。但目前来说，这些性能下降只会发生在第一次操作时，当以后对相同文件进行操作时将不会再次触发COW操作。&lt;/p&gt;
+&lt;h2&gt;如何使用Data Volume&lt;/h2&gt;
+&lt;p&gt;之前提过，当一个容器删除时，容器中所使用的R/W Layer也会随之被删除。那么容器中所产生的数据也会消失。如果用户需要保存这些数据，Docker建议使用Data Volume。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Data Volume是一个直接挂载到Container之中的目录或者文件。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Data Volume不会被存储驱动所控制，这就意味着所有对Data Volume的读写操作都将跳过存储驱动，而直接通过host OS来完成。用户可以挂载任意多个data volume到一个container之中，也可以多个container共享同一份data volume。&lt;/p&gt;
+&lt;p&gt;下图演示了两个Container同时挂载同一个Data Volume目录。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="https://lh3.googleusercontent.com/-uuuZMYFkWQk/VonUfwIIjYI/AAAAAAAAABI/FU8sZlZ3lsU/s757-Ic42/shared-volume.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;通过Data Volume可以减轻Container的"重量"，也可以当删除容器时保存其中有价值的数据。&lt;/p&gt;</summary></entry></feed>
