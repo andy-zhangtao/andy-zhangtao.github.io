@@ -120,6 +120,85 @@
                 </div>
         </div>
         <hr />
+        <div class="article">
+                <h1><a href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html">Docker输出日志的几种方式</a></h1>
+                <div class="well small"><footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2016-01-04T00:00:00+08:00">
+        <i class="icon-calendar"></i>一 04 一月 2016
+</abbr>
+<span class="label">By</span>
+<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
+<span class="label">Category</span>
+<a href="/category/docker.html"><i class="icon-folder-open"></i>Docker</a>.
+
+
+</footer><!-- /.post-info --></div>
+                <div class="summary"><h1>Docker输出日志的几种方式</h1>
+<p>在使用Docker过程中，查看日志是必不可少的一项工作。通过Docker提供的docker logs命令可以查看指定容器所输出的日志。但此命令有一些限制范围，当前docker logs命令仅仅只能支持json-file,journald这两种日志驱动，如果container使用其它类型的日志驱动，那么logs命令将无法提取日志。</p>
+<p><strong>那么如何查看容器所输出的日志呢？</strong></p>
+<p>为了解决这个问题，我们首先来看看Docker都支持哪些类型的日志驱动。</p>
+<hr />
+<h2>Docker支持的日志驱动类型</h2>
+<p>Docker目前支持以下类型的驱动：</p>
+<table>
+<thead>
+<tr>
+<th>驱动名称</th>
+<th>是否支持logs</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>json-file</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td>journald</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td>syslog</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td>gelf</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td>fluentd</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td>awslogs</td>
+<td>false</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>Docker如何指定日志驱动？</h2>
+<hr />
+<p>指定日志驱动有两种方式：</p>
+<ul>
+<li>通过Daemon指定全局默认日志驱动</li>
+<li>通过Run命令指定特定日志驱动</li>
+</ul>
+<p>如果需要指定全局默认日志驱动，可以在启动Docker Daemon时指定，命令如下：</p>
+<div class="highlight"><pre>docker daemon --log-driver=json-file --log-opt labels=foo --log-opt env=foo,fizz
+</pre></div>
+
+
+<p>当执行完这条命令之后 ...</p>
+                        <a class="btn primary xsmall" href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html">more ...</a>
+                </div>
+        </div>
+        <hr />
 
         </div><!--/span-->
 

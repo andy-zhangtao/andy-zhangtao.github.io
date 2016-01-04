@@ -125,7 +125,167 @@ changed-ubuntu      latest              03b964f68d06        33 seconds ago      
 &lt;p&gt;Data Volume不会被存储驱动所控制，这就意味着所有对Data Volume的读写操作都将跳过存储驱动，而直接通过host OS来完成。用户可以挂载任意多个data volume到一个container之中，也可以多个container共享同一份data volume。&lt;/p&gt;
 &lt;p&gt;下图演示了两个Container同时挂载同一个Data Volume目录。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="image" src="https://lh3.googleusercontent.com/-uuuZMYFkWQk/VonUfwIIjYI/AAAAAAAAABI/FU8sZlZ3lsU/s757-Ic42/shared-volume.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;通过Data Volume可以减轻Container的"重量"，也可以当删除容器时保存其中有价值的数据。&lt;/p&gt;</summary></entry><entry><title>MockKoa - 一个基于Koa的API测试模拟服务器</title><link href="/mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html" rel="alternate"></link><updated>2016-01-02T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-02:mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html</id><summary type="html">&lt;h1&gt;MockKoa － 一个基于Koa的API测试服务器&lt;/h1&gt;
+&lt;p&gt;通过Data Volume可以减轻Container的"重量"，也可以当删除容器时保存其中有价值的数据。&lt;/p&gt;</summary></entry><entry><title>Docker输出日志的几种方式</title><link href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html" rel="alternate"></link><updated>2016-01-04T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-04:dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html</id><summary type="html">&lt;h1&gt;Docker输出日志的几种方式&lt;/h1&gt;
+&lt;p&gt;在使用Docker过程中，查看日志是必不可少的一项工作。通过Docker提供的docker logs命令可以查看指定容器所输出的日志。但此命令有一些限制范围，当前docker logs命令仅仅只能支持json-file,journald这两种日志驱动，如果container使用其它类型的日志驱动，那么logs命令将无法提取日志。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;那么如何查看容器所输出的日志呢？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;为了解决这个问题，我们首先来看看Docker都支持哪些类型的日志驱动。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;Docker支持的日志驱动类型&lt;/h2&gt;
+&lt;p&gt;Docker目前支持以下类型的驱动：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;驱动名称&lt;/th&gt;
+&lt;th&gt;是否支持logs&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;json-file&lt;/td&gt;
+&lt;td&gt;true&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;journald&lt;/td&gt;
+&lt;td&gt;true&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;syslog&lt;/td&gt;
+&lt;td&gt;false&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;gelf&lt;/td&gt;
+&lt;td&gt;false&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;fluentd&lt;/td&gt;
+&lt;td&gt;false&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;awslogs&lt;/td&gt;
+&lt;td&gt;false&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;Docker如何指定日志驱动？&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;指定日志驱动有两种方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;通过Daemon指定全局默认日志驱动&lt;/li&gt;
+&lt;li&gt;通过Run命令指定特定日志驱动&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果需要指定全局默认日志驱动，可以在启动Docker Daemon时指定，命令如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;docker daemon --log-driver=json-file --log-opt labels=foo --log-opt env=foo,fizz
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;当执行完这条命令之后，以后所有新创建的Container都默认使用json-file来保存日志。这就是全局默认模式。如果需要给特定的Container指定日志驱动，那么就可以参考下面的命令：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;docker run --log-driver&lt;span class="o"&gt;=&lt;/span&gt;syslog --log-opt syslog-address&lt;span class="o"&gt;=&lt;/span&gt;tcp://192.168.0.42:123 ubuntu
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;各个日志驱动的用法&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;Json-file 驱动&lt;/h3&gt;
+&lt;p&gt;Json-file驱动有四个配置参数(以下参数均通过--log-opt设置)：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;参数名称&lt;/th&gt;
+&lt;th&gt;参数说明&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;max-size&lt;/td&gt;
+&lt;td&gt;[0-9+][k\&lt;/td&gt;
+&lt;td&gt;m\&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;max-file&lt;/td&gt;
+&lt;td&gt;[0-9+]&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;labels&lt;/td&gt;
+&lt;td&gt;label1,label2&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;env&lt;/td&gt;
+&lt;td&gt;env1,env2&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;max-size用于设置日志文件大小，单位为k，m和g。例如--log-opt max-size＝50m，可以将日志文件设置为50mb。当日志文件超过50mb之后，Docker将会重新生成新日志文件。如果max-size没有设置，那么Docker将永远不会生成新日志文件。&lt;/p&gt;
+&lt;p&gt;max-file用于设置日志文件数量。例如--log-opt max-file=100。Docker将只会保存最后100个日志文件。如果max-file没有设置，那么Docker将会保存所有的日志文件。&lt;/p&gt;
+&lt;p&gt;labels和env用于设置日志标签。&lt;/p&gt;
+&lt;h3&gt;syslog 驱动&lt;/h3&gt;
+&lt;p&gt;Docker可以将日志发送到syslog服务器(因为syslog服务器兼容rsyslog服务器，所以Docker也可将日志分送至rsyslog server)。&lt;/p&gt;
+&lt;p&gt;syslog可使用的参数如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;--log-opt syslog-address=[tcp|udp]://host:port
+--log-opt syslog-address=unix://path
+--log-opt syslog-facility=daemon
+--log-opt tag=&amp;quot;mailer&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;syslog-address用来设置syslog(rsyslogd)server的IP和端口。 syslog-facility用来设置发送设备名称，目前可以设置的设备名称如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;kern&lt;/li&gt;
+&lt;li&gt;user&lt;/li&gt;
+&lt;li&gt;mail&lt;/li&gt;
+&lt;li&gt;daemon&lt;/li&gt;
+&lt;li&gt;auth&lt;/li&gt;
+&lt;li&gt;syslog&lt;/li&gt;
+&lt;li&gt;lpr&lt;/li&gt;
+&lt;li&gt;news&lt;/li&gt;
+&lt;li&gt;uucp&lt;/li&gt;
+&lt;li&gt;cron&lt;/li&gt;
+&lt;li&gt;authpriv&lt;/li&gt;
+&lt;li&gt;ftp&lt;/li&gt;
+&lt;li&gt;local0&lt;/li&gt;
+&lt;li&gt;local1&lt;/li&gt;
+&lt;li&gt;local2&lt;/li&gt;
+&lt;li&gt;local3&lt;/li&gt;
+&lt;li&gt;local4&lt;/li&gt;
+&lt;li&gt;local5&lt;/li&gt;
+&lt;li&gt;local6&lt;/li&gt;
+&lt;li&gt;local7&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;默认情况下，Docker使用Container short name作为日志标记名称，但用户也可以通过tag来重命名此名称。&lt;/p&gt;
+&lt;h3&gt;journald 驱动&lt;/h3&gt;
+&lt;p&gt;如果用户指定了journald驱动，Docker将会把所有日志发送到Docker.service日志中(默认情况)。用户可以通过journalctl 来筛选日志。&lt;/p&gt;
+&lt;h3&gt;gelf 驱动&lt;/h3&gt;
+&lt;p&gt;gelf驱动的使用方式和syslog的使用方式类似，可搭配的参数如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;--log-opt gelf-address=udp://host:port
+--log-opt tag=&amp;quot;database&amp;quot;
+--log-opt labels=label1,label2
+--log-opt env=env1,env2
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;fluentd 驱动&lt;/h3&gt;
+&lt;p&gt;在使用fluentd驱动时需要注意一点，如果用户所指定的fluentd服务器地址不可达，那么此容器将会报错退出。而其它驱动则不会出现这种情况。&lt;/p&gt;
+&lt;p&gt;使用fluentd驱动的命令如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;docker run --log-driver=fluentd --log-opt fluentd-address=localhost:24224 --log-opt tag=docker.&lt;/span&gt;&lt;span class="cp"&gt;{{&lt;/span&gt;&lt;span class="nv"&gt;.Name&lt;/span&gt;&lt;span class="cp"&gt;}}&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;aws logs驱动&lt;/h3&gt;
+&lt;p&gt;AWS驱动使用目前不太普遍，所以下面仅提供使用参数：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;--log-opt awslogs-region=&amp;lt;aws_region&amp;gt;
+--log-opt awslogs-group=&amp;lt;log_group_name&amp;gt;
+--log-opt awslogs-stream=&amp;lt;log_stream_name&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>MockKoa - 一个基于Koa的API测试模拟服务器</title><link href="/mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html" rel="alternate"></link><updated>2016-01-02T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-02:mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html</id><summary type="html">&lt;h1&gt;MockKoa － 一个基于Koa的API测试服务器&lt;/h1&gt;
 &lt;p&gt;来自于andy的博客&lt;a href="&amp;#109;&amp;#97;&amp;#105;&amp;#108;&amp;#116;&amp;#111;&amp;#58;&amp;#97;&amp;#110;&amp;#100;&amp;#121;&amp;#46;&amp;#122;&amp;#104;&amp;#97;&amp;#110;&amp;#103;&amp;#116;&amp;#97;&amp;#111;&amp;#64;&amp;#104;&amp;#111;&amp;#116;&amp;#109;&amp;#97;&amp;#105;&amp;#108;&amp;#46;&amp;#99;&amp;#111;&amp;#109;"&gt;&amp;#97;&amp;#110;&amp;#100;&amp;#121;&amp;#46;&amp;#122;&amp;#104;&amp;#97;&amp;#110;&amp;#103;&amp;#116;&amp;#97;&amp;#111;&amp;#64;&amp;#104;&amp;#111;&amp;#116;&amp;#109;&amp;#97;&amp;#105;&amp;#108;&amp;#46;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;MockKoa是什么？&lt;/h2&gt;
 &lt;p&gt;MockKoa是一个基于Koa＋nodejs的Rest API的测试服务器，说成是框架也可以，但我认为距离框架还有一些距离。&lt;/p&gt;

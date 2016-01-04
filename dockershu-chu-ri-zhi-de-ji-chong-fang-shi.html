@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>andy's blog</title>
+    <title>Docker输出日志的几种方式</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="andy.zhangtao">
@@ -64,7 +64,7 @@
           <div class="nav-collapse">
             <ul class="nav">
                           <li class="divider-vertical"></li>
-                  <li >
+                  <li class="active">
                     <a href="/category/docker.html">
 						<i class="icon-folder-open icon-large"></i>Docker
 					</a>
@@ -89,9 +89,20 @@
     <div class="container-fluid">
       <div class="row">
         <div class="span9" id="content">
-        <div class="article">
-                <h1><a href="/docker-ru-he-guan-li-imagecontainer.html">Docker 如何管理Image,Container</a></h1>
-                <div class="well small"><footer class="post-info">
+<section id="content">
+        <article>
+                <header>
+                        <h1>
+                                <a href=""
+                                        rel="bookmark"
+                                        title="Permalink to Docker输出日志的几种方式">
+                                        Docker输出日志的几种方式
+                                </a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
 <span class="label">Date</span>
 <abbr class="published" title="2016-01-04T00:00:00+08:00">
         <i class="icon-calendar"></i>一 04 一月 2016
@@ -102,39 +113,8 @@
 <a href="/category/docker.html"><i class="icon-folder-open"></i>Docker</a>.
 
 
-</footer><!-- /.post-info --></div>
-                <div class="summary"><h1>Docker 如何管理Image,Container？</h1>
-<p>在使用Docker之前，有一个问题始终无法回避：Docker如何高效的管理和使用Image和Container数据？
-为了搞明白这个问题，我们首先需要理解：</p>
-<ol>
-<li>Docker如何构建和存储Image？</li>
-<li>Docker如何基于Image来创建Container？</li>
-<li>Docker如何操作Image和Container？</li>
-</ol>
-<h2>Image和Container的基础 － Layers(文件层)</h2>
-<p>从数据结构上面来看，Docker当中所有的Image都是一系列<strong>有序</strong>只读(Read-Only)文件层(Layers)的集合。位于这个集合最顶端的文件层，我们称之为BaseImage。其它文件层都依赖于它。下图是一个Ubuntu15.04的Image示意图，这个Image包含了4个文件层。
-<img alt="image" src="https://lh3.googleusercontent.com/-D8MQPkSpeb8/VonUe0SEWKI/AAAAAAAAAAw/NXLg19gDpq4/s448-Ic42/image-layers.jpg" /></p>
-<p>当用户在这个Container中做任何写操作时，例如：在/tmp目录中新创建一个文件，Docker就会在这个集合最下面再创建一个文件层来保存这种变化。Docker当中每个文件层都有一个唯一ID(UUID)，并且每个文件层都会记录其所依赖的文件层信息。</p>
-<p>Image都是由Layers组成的，与此相对应的，所有的Container也同样是由Layers组成的。但Container与Image又一个本质区别，组成Image的Layer都是RO，而组成Container的Layer中，处于最低端的Layer是RW，其它Layer都是RO。这个RW的Layer，我们称之为Thin R/W Layer。如下图所示 ...</p>
-                        <a class="btn primary xsmall" href="/docker-ru-he-guan-li-imagecontainer.html">more ...</a>
-                </div>
-        </div>
-        <hr />
-        <div class="article">
-                <h1><a href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html">Docker输出日志的几种方式</a></h1>
-                <div class="well small"><footer class="post-info">
-<span class="label">Date</span>
-<abbr class="published" title="2016-01-04T00:00:00+08:00">
-        <i class="icon-calendar"></i>一 04 一月 2016
-</abbr>
-<span class="label">By</span>
-<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
-<span class="label">Category</span>
-<a href="/category/docker.html"><i class="icon-folder-open"></i>Docker</a>.
-
-
-</footer><!-- /.post-info --></div>
-                <div class="summary"><h1>Docker输出日志的几种方式</h1>
+</footer><!-- /.post-info -->                </div>
+                <h1>Docker输出日志的几种方式</h1>
 <p>在使用Docker过程中，查看日志是必不可少的一项工作。通过Docker提供的docker logs命令可以查看指定容器所输出的日志。但此命令有一些限制范围，当前docker logs命令仅仅只能支持json-file,journald这两种日志驱动，如果container使用其它类型的日志驱动，那么logs命令将无法提取日志。</p>
 <p><strong>那么如何查看容器所输出的日志呢？</strong></p>
 <p>为了解决这个问题，我们首先来看看Docker都支持哪些类型的日志驱动。</p>
@@ -194,50 +174,124 @@
 </pre></div>
 
 
-<p>当执行完这条命令之后 ...</p>
-                        <a class="btn primary xsmall" href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html">more ...</a>
-                </div>
-        </div>
-        <hr />
-        <div class="article">
-                <h1><a href="/mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html">MockKoa - 一个基于Koa的API测试模拟服务器</a></h1>
-                <div class="well small"><footer class="post-info">
-<span class="label">Date</span>
-<abbr class="published" title="2016-01-02T00:00:00+08:00">
-        <i class="icon-calendar"></i>六 02 一月 2016
-</abbr>
-<span class="label">By</span>
-<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
-<span class="label">Category</span>
-<a href="/category/nodejs.html"><i class="icon-folder-open"></i>Nodejs</a>.
+<p>当执行完这条命令之后，以后所有新创建的Container都默认使用json-file来保存日志。这就是全局默认模式。如果需要给特定的Container指定日志驱动，那么就可以参考下面的命令：</p>
+<div class="highlight"><pre><span class="nv">$ </span>docker run --log-driver<span class="o">=</span>syslog --log-opt syslog-address<span class="o">=</span>tcp://192.168.0.42:123 ubuntu
+</pre></div>
 
 
-</footer><!-- /.post-info --></div>
-                <div class="summary"><h1>MockKoa － 一个基于Koa的API测试服务器</h1>
-<p>来自于andy的博客<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#121;&#46;&#122;&#104;&#97;&#110;&#103;&#116;&#97;&#111;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#97;&#110;&#100;&#121;&#46;&#122;&#104;&#97;&#110;&#103;&#116;&#97;&#111;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a></p>
-<h2>MockKoa是什么？</h2>
-<p>MockKoa是一个基于Koa＋nodejs的Rest API的测试服务器，说成是框架也可以，但我认为距离框架还有一些距离。</p>
-<p>MockKoa使用nodejs来开发，通过Koa完成主要逻辑处理，可以加载以swagger为载体的API服务。(如果不了解swagger,<a href="www.swagger.io">请点击这里</a>)</p>
-<p>目前MockKoa仅仅支持swagger格式，未来会考虑支持Yaml格式，但目前还没有具体时间安排。</p>
-<h2>MockKoa可以做什么？</h2>
-<p>MockKoa最重要的功能就是按照模拟策略生成API返回值，针对用户发起的每个API请求都可以生成唯一准确并且满足用户预期的返回值。</p>
-<p>返回值包括：</p>
+<h2>各个日志驱动的用法</h2>
+<hr />
+<h3>Json-file 驱动</h3>
+<p>Json-file驱动有四个配置参数(以下参数均通过--log-opt设置)：</p>
+<table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>参数说明</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>max-size</td>
+<td>[0-9+][k\</td>
+<td>m\</td>
+</tr>
+<tr>
+<td>max-file</td>
+<td>[0-9+]</td>
+<td></td>
+</tr>
+<tr>
+<td>labels</td>
+<td>label1,label2</td>
+<td></td>
+</tr>
+<tr>
+<td>env</td>
+<td>env1,env2</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>max-size用于设置日志文件大小，单位为k，m和g。例如--log-opt max-size＝50m，可以将日志文件设置为50mb。当日志文件超过50mb之后，Docker将会重新生成新日志文件。如果max-size没有设置，那么Docker将永远不会生成新日志文件。</p>
+<p>max-file用于设置日志文件数量。例如--log-opt max-file=100。Docker将只会保存最后100个日志文件。如果max-file没有设置，那么Docker将会保存所有的日志文件。</p>
+<p>labels和env用于设置日志标签。</p>
+<h3>syslog 驱动</h3>
+<p>Docker可以将日志发送到syslog服务器(因为syslog服务器兼容rsyslog服务器，所以Docker也可将日志分送至rsyslog server)。</p>
+<p>syslog可使用的参数如下：</p>
+<div class="highlight"><pre>--log-opt syslog-address=[tcp|udp]://host:port
+--log-opt syslog-address=unix://path
+--log-opt syslog-facility=daemon
+--log-opt tag=&quot;mailer&quot;
+</pre></div>
+
+
+<p>syslog-address用来设置syslog(rsyslogd)server的IP和端口。 syslog-facility用来设置发送设备名称，目前可以设置的设备名称如下：</p>
 <ul>
-<li>响应状态码</li>
-<li>响应body数据</li>
-<li>响应header数据</li>
+<li>kern</li>
+<li>user</li>
+<li>mail</li>
+<li>daemon</li>
+<li>auth</li>
+<li>syslog</li>
+<li>lpr</li>
+<li>news</li>
+<li>uucp</li>
+<li>cron</li>
+<li>authpriv</li>
+<li>ftp</li>
+<li>local0</li>
+<li>local1</li>
+<li>local2</li>
+<li>local3</li>
+<li>local4</li>
+<li>local5</li>
+<li>local6</li>
+<li>local7</li>
 </ul>
-<h4>响应状态码</h4>
-<p>MockKoa可以根据用户设定的模拟策略来返回指定的状态码。MockKoa支持多种模拟策略，并且支持一定的逻辑处理，但MockKoa不会自动生成状态码，这些状态码仍然需要用户明确指定。指定的方式可以是通过swagger文件指定或者通过用户自定义代码指定。</p>
-<p>MockKoa在返回状态码时不会校验状态码是否有效，即便用户设定需要返回的响应码为601，MockKoa也会"乖顺"的返回此值。所以需要用户自行保证状态码是否有效。</p>
-<p>同时，MockKoa不会处理重定向请求。对于重定向请求，需要客户端来处理，MockKoa模拟的是服务端，所以不需要处理重定向请求(有一些用户问过此问题，所以补充此处说明)。</p>
-<h4>响应body数据</h4>
-<p>MockKoa可以根据用户设定的body数据返回。 MockKoa默认设定Content—Type为<strong><em>*application ...</em></strong></p>
-                        <a class="btn primary xsmall" href="/mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html">more ...</a>
-                </div>
-        </div>
-        <hr />
+<p>默认情况下，Docker使用Container short name作为日志标记名称，但用户也可以通过tag来重命名此名称。</p>
+<h3>journald 驱动</h3>
+<p>如果用户指定了journald驱动，Docker将会把所有日志发送到Docker.service日志中(默认情况)。用户可以通过journalctl 来筛选日志。</p>
+<h3>gelf 驱动</h3>
+<p>gelf驱动的使用方式和syslog的使用方式类似，可搭配的参数如下：</p>
+<div class="highlight"><pre>--log-opt gelf-address=udp://host:port
+--log-opt tag=&quot;database&quot;
+--log-opt labels=label1,label2
+--log-opt env=env1,env2
+</pre></div>
 
+
+<h3>fluentd 驱动</h3>
+<p>在使用fluentd驱动时需要注意一点，如果用户所指定的fluentd服务器地址不可达，那么此容器将会报错退出。而其它驱动则不会出现这种情况。</p>
+<p>使用fluentd驱动的命令如下：</p>
+<div class="highlight"><pre><span class="x">docker run --log-driver=fluentd --log-opt fluentd-address=localhost:24224 --log-opt tag=docker.</span><span class="cp">{{</span><span class="nv">.Name</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+
+
+<h3>aws logs驱动</h3>
+<p>AWS驱动使用目前不太普遍，所以下面仅提供使用参数：</p>
+<div class="highlight"><pre>--log-opt awslogs-region=&lt;aws_region&gt;
+--log-opt awslogs-group=&lt;log_group_name&gt;
+--log-opt awslogs-stream=&lt;log_stream_name&gt;
+</pre></div>
+                </div><!-- /.entry-content -->
+                <div class="comments">
+                <h2>Comments !</h2>
+                        <div id="disqus_thread"></div>
+                        <script type="text/javascript">
+                           var disqus_identifier = "dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html";
+                           (function() {
+                                var dsq = document.createElement('script');
+                                dsq.type = 'text/javascript'; dsq.async = true;
+                                dsq.src = 'http://andy-s-blog.disqus.com/embed.js';
+                                (document.getElementsByTagName('head')[0] ||
+                                 document.getElementsByTagName('body')[0]).appendChild(dsq);
+                          })();
+                        </script>
+                </div>
+        </article>
+</section>
         </div><!--/span-->
 
                 <div class="span3 well sidebar-nav" id="sidebar">
