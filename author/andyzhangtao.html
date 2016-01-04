@@ -1,109 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>andy's blog - andy.zhangtao</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="andy.zhangtao">
+<head>
+	<meta charset="utf-8">
+	<title>andy's blog</title>
+	<meta name="description" content="">
+	<meta name="author" content="andy.zhangtao">
 
-    <!-- Le styles -->
-    <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css" />
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-      .tag-1 {
-        font-size: 13pt;
-      }
-      .tag-2 {
-        font-size: 10pt;
-      }
-      .tag-2 {
-        font-size: 8pt;
-      }
-      .tag-4 {
-        font-size: 6pt;
-     }
-    </style>
-    <link href="/theme/css/bootstrap-responsive.min.css" rel="stylesheet">
-        <link href="/theme/css/font-awesome.css" rel="stylesheet">
+	<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="/theme/html5.js"></script>
+	<![endif]-->
 
-    <link href="/theme/css/pygments.css" rel="stylesheet">
+	<!-- Styles -->
+	<link href="/theme/bootstrap.min.css" rel="stylesheet">
+	<link href="/theme/local.css" rel="stylesheet">
+	<link href="/theme/pygments.css" rel="stylesheet">
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="/theme/images/favicon.ico">
-    <link rel="apple-touch-icon" href="/theme/images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/theme/images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/theme/images/apple-touch-icon-114x114.png">
-
-    <link href="/" type="application/atom+xml" rel="alternate" title="andy's blog ATOM Feed" />
-
-  </head>
-
-  <body>
-
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="/index.html">andy's blog </a>
-          <div class="nav-collapse">
-            <ul class="nav">
-                          <li class="divider-vertical"></li>
-                  <li >
-                    <a href="/category/docker.html">
-						<i class="icon-folder-open icon-large"></i>Docker
-					</a>
-                  </li>
-                  <li >
-                    <a href="/category/nodejs.html">
-						<i class="icon-folder-open icon-large"></i>Nodejs
-					</a>
-                  </li>
-
-                          <ul class="nav pull-right">
-                                <li><a href="/archives.html"><i class="icon-th-list"></i>Archives</a></li>
-                          </ul>
-
-            </ul>
-            <!--<p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>-->
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
-
-    <div class="container-fluid">
-      <div class="row">
-        <div class="span9" id="content">
-        <div class="article">
-                <h1><a href="/docker-ru-he-guan-li-imagecontainer.html">Docker 如何管理Image,Container</a></h1>
-                <div class="well small"><footer class="post-info">
-<span class="label">Date</span>
-<abbr class="published" title="2016-01-04T00:00:00+08:00">
-        <i class="icon-calendar"></i>一 04 一月 2016
-</abbr>
-<span class="label">By</span>
-<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
-<span class="label">Category</span>
-<a href="/category/docker.html"><i class="icon-folder-open"></i>Docker</a>.
+	<!-- Feeds -->
+	<link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="andy's blog Atom Feed" />
 
 
-</footer><!-- /.post-info --></div>
-                <div class="summary"><h1>Docker 如何管理Image,Container？</h1>
+
+
+<script>var _gaq=[['_setAccount','UA-71897460-1'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
+</head>
+<body>
+	<div class="topbar">
+	  <div class="topbar-inner">
+		<div class="container-fluid">
+		  <a class="brand" href="/">andy's blog</a>
+			<ul class="nav">
+					<li ><a href="/category/docker.html">Docker</a></li>
+					<li ><a href="/category/nodejs.html">Nodejs</a></li>
+			</ul>
+			<p class="pull-right"><a href="/archives.html">[archives]</a> <a href="/tags.html">[tags]</a></p>
+		</div>
+	  </div>
+	</div>
+
+	<div class="container-fluid">
+	  <div class="sidebar">
+		<div class="well">
+			<h3>Blogroll</h3>
+			<ul>
+				<li><a href="http://getpelican.com/">Pelican</a></li>
+				<li><a href="http://python.org/">Python.org</a></li>
+				<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+				<li><a href="#">You can modify those links in your config file</a></li>
+			</ul>
+			<div class="social">
+			<h3>Social</h3>
+			<ul>
+				<li><a href="#">You can add links in your config file</a></li>
+				<li><a href="#">Another social link</a></li>
+			</ul>
+			</div>
+		</div>
+	  </div>
+	  <div class="content">
+<div class="page-header"><h1>andy's blog <small>andy.zhangtao</small></h1></div>
+<div class='article'>
+	<h2>Docker 如何管理Image,Container</h2>
+	<div class="well small">Permalink: <a class="more" href="/docker-ru-he-guan-li-imagecontainer.html">2016-01-04 00:00:00+08:00</a>
+by <a class="url fn" href="/author/andyzhangtao.html">andy.zhangtao </a>
+ in <a href="/category/docker.html">Docker</a>
+</div>
+	<div class="summary"><h1>Docker 如何管理Image,Container？</h1>
 <p>在使用Docker之前，有一个问题始终无法回避：Docker如何高效的管理和使用Image和Container数据？
 为了搞明白这个问题，我们首先需要理解：</p>
 <ol>
@@ -115,26 +77,16 @@
 <p>从数据结构上面来看，Docker当中所有的Image都是一系列<strong>有序</strong>只读(Read-Only)文件层(Layers)的集合。位于这个集合最顶端的文件层，我们称之为BaseImage。其它文件层都依赖于它。下图是一个Ubuntu15.04的Image示意图，这个Image包含了4个文件层。
 <img alt="image" src="https://lh3.googleusercontent.com/-D8MQPkSpeb8/VonUe0SEWKI/AAAAAAAAAAw/NXLg19gDpq4/s448-Ic42/image-layers.jpg" /></p>
 <p>当用户在这个Container中做任何写操作时，例如：在/tmp目录中新创建一个文件，Docker就会在这个集合最下面再创建一个文件层来保存这种变化。Docker当中每个文件层都有一个唯一ID(UUID)，并且每个文件层都会记录其所依赖的文件层信息。</p>
-<p>Image都是由Layers组成的，与此相对应的，所有的Container也同样是由Layers组成的。但Container与Image又一个本质区别，组成Image的Layer都是RO，而组成Container的Layer中，处于最低端的Layer是RW，其它Layer都是RO。这个RW的Layer，我们称之为Thin R/W Layer。如下图所示 ...</p>
-                        <a class="btn primary xsmall" href="/docker-ru-he-guan-li-imagecontainer.html">more ...</a>
-                </div>
-        </div>
-        <hr />
-        <div class="article">
-                <h1><a href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html">Docker输出日志的几种方式</a></h1>
-                <div class="well small"><footer class="post-info">
-<span class="label">Date</span>
-<abbr class="published" title="2016-01-04T00:00:00+08:00">
-        <i class="icon-calendar"></i>一 04 一月 2016
-</abbr>
-<span class="label">By</span>
-<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
-<span class="label">Category</span>
-<a href="/category/docker.html"><i class="icon-folder-open"></i>Docker</a>.
-
-
-</footer><!-- /.post-info --></div>
-                <div class="summary"><h1>Docker输出日志的几种方式</h1>
+<p>Image都是由Layers组成的，与此相对应的，所有的Container也同样是由Layers组成的。但Container与Image又一个本质区别，组成Image的Layer都是RO，而组成Container的Layer中，处于最低端的Layer是RW，其它Layer都是RO。这个RW的Layer，我们称之为Thin R/W Layer。如下图所示 ...</p> <a class="btn primary xsmall" href="/docker-ru-he-guan-li-imagecontainer.html">more…</a>
+	</div>
+</div>	
+<div class='article'>
+	<h2>Docker输出日志的几种方式</h2>
+	<div class="well small">Permalink: <a class="more" href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html">2016-01-04 00:00:00+08:00</a>
+by <a class="url fn" href="/author/andyzhangtao.html">andy.zhangtao </a>
+ in <a href="/category/docker.html">Docker</a>
+</div>
+	<div class="summary"><h1>Docker输出日志的几种方式</h1>
 <p>在使用Docker过程中，查看日志是必不可少的一项工作。通过Docker提供的docker logs命令可以查看指定容器所输出的日志。但此命令有一些限制范围，当前docker logs命令仅仅只能支持json-file,journald这两种日志驱动，如果container使用其它类型的日志驱动，那么logs命令将无法提取日志。</p>
 <p><strong>那么如何查看容器所输出的日志呢？</strong></p>
 <p>为了解决这个问题，我们首先来看看Docker都支持哪些类型的日志驱动。</p>
@@ -194,26 +146,16 @@
 </pre></div>
 
 
-<p>当执行完这条命令之后 ...</p>
-                        <a class="btn primary xsmall" href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html">more ...</a>
-                </div>
-        </div>
-        <hr />
-        <div class="article">
-                <h1><a href="/mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html">MockKoa - 一个基于Koa的API测试模拟服务器</a></h1>
-                <div class="well small"><footer class="post-info">
-<span class="label">Date</span>
-<abbr class="published" title="2016-01-02T00:00:00+08:00">
-        <i class="icon-calendar"></i>六 02 一月 2016
-</abbr>
-<span class="label">By</span>
-<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
-<span class="label">Category</span>
-<a href="/category/nodejs.html"><i class="icon-folder-open"></i>Nodejs</a>.
-
-
-</footer><!-- /.post-info --></div>
-                <div class="summary"><h1>MockKoa － 一个基于Koa的API测试服务器</h1>
+<p>当执行完这条命令之后 ...</p> <a class="btn primary xsmall" href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html">more…</a>
+	</div>
+</div>	
+<div class='article'>
+	<h2>MockKoa - 一个基于Koa的API测试模拟服务器</h2>
+	<div class="well small">Permalink: <a class="more" href="/mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html">2016-01-02 00:00:00+08:00</a>
+by <a class="url fn" href="/author/andyzhangtao.html">andy.zhangtao </a>
+ in <a href="/category/nodejs.html">Nodejs</a>
+</div>
+	<div class="summary"><h1>MockKoa － 一个基于Koa的API测试服务器</h1>
 <p>来自于andy的博客<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#121;&#46;&#122;&#104;&#97;&#110;&#103;&#116;&#97;&#111;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#97;&#110;&#100;&#121;&#46;&#122;&#104;&#97;&#110;&#103;&#116;&#97;&#111;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a></p>
 <h2>MockKoa是什么？</h2>
 <p>MockKoa是一个基于Koa＋nodejs的Rest API的测试服务器，说成是框架也可以，但我认为距离框架还有一些距离。</p>
@@ -232,82 +174,17 @@
 <p>MockKoa在返回状态码时不会校验状态码是否有效，即便用户设定需要返回的响应码为601，MockKoa也会"乖顺"的返回此值。所以需要用户自行保证状态码是否有效。</p>
 <p>同时，MockKoa不会处理重定向请求。对于重定向请求，需要客户端来处理，MockKoa模拟的是服务端，所以不需要处理重定向请求(有一些用户问过此问题，所以补充此处说明)。</p>
 <h4>响应body数据</h4>
-<p>MockKoa可以根据用户设定的body数据返回。 MockKoa默认设定Content—Type为<strong><em>*application ...</em></strong></p>
-                        <a class="btn primary xsmall" href="/mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html">more ...</a>
-                </div>
-        </div>
-        <hr />
-
-        </div><!--/span-->
-
-                <div class="span3 well sidebar-nav" id="sidebar">
-<ul class="nav nav-list">
-<li class="nav-header"><h4><i class="icon-external-link"></i>blogroll</h4></li>
-    <li><a href="http://getpelican.com/"><i class="icon-external-link"></i>Pelican</a></li>
-    <li><a href="http://python.org/"><i class="icon-external-link"></i>Python.org</a></li>
-    <li><a href="http://jinja.pocoo.org/"><i class="icon-external-link"></i>Jinja2</a></li>
-    <li><a href="#"><i class="icon-external-link"></i>You can modify those links in your config file</a></li>
-<li class="nav-header"><h4><i class="icon-home icon-large"></i> social</h4></li>
-<li><a href="/" rel="alternate"><i class="icon-bookmark icon-large"></i>atom feed</a></li>
-    <li><a href="#"><i class="icon-You can add links in your config file-sign icon-large"></i>You can add links in your config file</a></li>
-    <li><a href="#"><i class="icon-Another social link-sign icon-large"></i>Another social link</a></li>
-
-<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>
-<li>
-<a href="/category/docker.html">
-    <i class="icon-folder-open icon-large"></i>Docker
-</a>
-</li>
-<li>
-<a href="/category/nodejs.html">
-    <i class="icon-folder-open icon-large"></i>Nodejs
-</a>
-</li>
-
-<li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
+<p>MockKoa可以根据用户设定的body数据返回。 MockKoa默认设定Content—Type为<strong><em>*application ...</em></strong></p> <a class="btn primary xsmall" href="/mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html">more…</a>
+	</div>
+</div>	
 
 
-</ul>        </div><!--/.well -->
+		<footer>
+		  <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme based on <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>.</p>
+		  <p>&copy; andy.zhangtao</p>
+		</footer>
+	  </div>
 
-      </div><!--/row-->
-
-      <hr>
-
-      <footer>
-        <address id="about">
-                Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican <i class="icon-external-link"></i></a>,
-                                which takes great advantage of <a href="http://python.org">Python <i class="icon-external-link"></i></a>.
-        </address><!-- /#about -->
-
-        <p>The theme is from <a href="http://twitter.github.com/bootstrap/">Bootstrap from Twitter <i class="icon-external-link"></i></a>,
-                   and <a href="http://fortawesome.github.com/Font-Awesome/">Font-Awesome <i class="icon-external-link"></i></a>, thanks!</p>
-      </footer>
-
-    </div><!--/.fluid-container-->
-
-
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-	var pageTracker = _gat._getTracker("UA-71897460-1");
-pageTracker._trackPageview();
-} catch(err) {}</script>
-<script type="text/javascript">
-    var disqus_shortname = 'andy-s-blog';
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
-
-    <!-- Le javascript -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/theme/js/jquery-1.7.2.min.js"></script>
-    <script src="/theme/js/bootstrap.min.js"></script>
-  </body>
+	</div>
+</body>
 </html>
