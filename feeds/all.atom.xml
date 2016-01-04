@@ -48,15 +48,19 @@ Status: Downloaded newer image &lt;span class="k"&gt;for&lt;/span&gt; ubuntu:15.
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;首先通过创建一个Dockerfile来引入Ubuntu15.04&lt;/p&gt;
-&lt;p&gt;```
-FROM ubuntu:15.04&lt;/p&gt;
-&lt;p&gt;```
-2.  我们在新Image中的创建一个文件，并且写入Hello World。&lt;/p&gt;
-&lt;p&gt;```
-FROM ubuntu:15.04&lt;/p&gt;
+&lt;p&gt;```&lt;/p&gt;
+&lt;p&gt;FROM ubuntu:15.04&lt;/p&gt;
+&lt;p&gt;```&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;我们在新Image中的创建一个文件，并且写入Hello World。&lt;/p&gt;
+&lt;p&gt;```&lt;/p&gt;
+&lt;p&gt;FROM ubuntu:15.04&lt;/p&gt;
 &lt;p&gt;RUN echo "Hello world" &amp;gt; /tmp/newfile&lt;/p&gt;
-&lt;p&gt;```
-3.  保存Dockerfile。然后开始构建新Image：&lt;/p&gt;
+&lt;p&gt;```&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;保存Dockerfile。然后开始构建新Image：&lt;/p&gt;
 &lt;p&gt;```
 $ docker build -t changed-ubuntu .
 Sending build context to Docker daemon 2.048 kB
@@ -86,8 +90,8 @@ IMAGE               CREATED              CREATED BY                             
 2bd276ed39d5        6 weeks ago          /bin/sh -c sed -i 's/^#\s&lt;em&gt;(deb.&lt;/em&gt;universe)$/   1.879 kB          &lt;br /&gt;
 13c0c663a321        6 weeks ago          /bin/sh -c echo '#!/bin/sh' &amp;gt; /usr/sbin/polic   701 B             &lt;br /&gt;
 6e6a100fa147        6 weeks ago          /bin/sh -c #(nop) ADD file:49710b44e2ae0edef4   131.4 MB            &lt;/p&gt;
-&lt;p&gt;``` 
-通过Docker history命令可以看到目前处于Layer集合最底层的Layer(03b964f68d06)就是我们通过"echo "Hello world" &amp;gt; /tmp/newfile"所创建的。 而其它四个Layer则是Ubuntu15.04所包含的4个Layer。&lt;/p&gt;
+&lt;p&gt;``` &lt;/p&gt;
+&lt;p&gt;通过Docker history命令可以看到目前处于Layer集合最底层的Layer(03b964f68d06)就是我们通过"echo "Hello world" &amp;gt; /tmp/newfile"所创建的。 而其它四个Layer则是Ubuntu15.04所包含的4个Layer。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;我们通过查看目录来验证是否又单独拷贝了另外4个Layer。&lt;/p&gt;
