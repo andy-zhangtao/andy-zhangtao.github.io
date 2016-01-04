@@ -65,6 +65,11 @@
             <ul class="nav">
                           <li class="divider-vertical"></li>
                   <li >
+                    <a href="/category/docker.html">
+						<i class="icon-folder-open icon-large"></i>Docker
+					</a>
+                  </li>
+                  <li >
                     <a href="/category/nodejs.html">
 						<i class="icon-folder-open icon-large"></i>Nodejs
 					</a>
@@ -84,6 +89,37 @@
     <div class="container-fluid">
       <div class="row">
         <div class="span9" id="content">
+        <div class="article">
+                <h1><a href="/docker-storage.html">Docker storage</a></h1>
+                <div class="well small"><footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2016-01-04T00:00:00+08:00">
+        <i class="icon-calendar"></i>一 04 一月 2016
+</abbr>
+<span class="label">By</span>
+<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
+<span class="label">Category</span>
+<a href="/category/docker.html"><i class="icon-folder-open"></i>Docker</a>.
+
+
+</footer><!-- /.post-info --></div>
+                <div class="summary"><h1>Docker 如何管理Image,Container？</h1>
+<p>在使用Docker之前，有一个问题始终无法回避：Docker如何高效的管理和使用Image和Container数据？
+为了搞明白这个问题，我们首先需要理解：</p>
+<ol>
+<li>Docker如何构建和存储Image？</li>
+<li>Docker如何基于Image来创建Container？</li>
+<li>Docker如何操作Image和Container？</li>
+</ol>
+<h2>Image和Container的基础 － Layers(文件层)</h2>
+<p>从数据结构上面来看，Docker当中所有的Image都是一系列<strong>有序</strong>只读(Read-Only)文件层(Layers)的集合。位于这个集合最顶端的文件层，我们称之为BaseImage。其它文件层都依赖于它。下图是一个Ubuntu15.04的Image示意图，这个Image包含了4个文件层。
+<img alt="image" src="https://lh3.googleusercontent.com/-D8MQPkSpeb8/VonUe0SEWKI/AAAAAAAAAAw/NXLg19gDpq4/s448-Ic42/image-layers.jpg" /></p>
+<p>当用户在这个Container中做任何写操作时，例如：在/tmp目录中新创建一个文件，Docker就会在这个集合最下面再创建一个文件层来保存这种变化。Docker当中每个文件层都有一个唯一ID(UUID)，并且每个文件层都会记录其所依赖的文件层信息。</p>
+<p>Image都是由Layers组成的，与此相对应的，所有的Container也同样是由Layers组成的。但Container与Image又一个本质区别，组成Image的Layer都是RO，而组成Container的Layer中，处于最低端的Layer是RW，其它Layer都是RO。这个RW的Layer，我们称之为Thin R/W Layer。如下图所示 ...</p>
+                        <a class="btn primary xsmall" href="/docker-storage.html">more ...</a>
+                </div>
+        </div>
+        <hr />
         <div class="article">
                 <h1><a href="/mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html">MockKoa - 一个基于Koa的API测试模拟服务器</a></h1>
                 <div class="well small"><footer class="post-info">
@@ -138,6 +174,11 @@
     <li><a href="#"><i class="icon-Another social link-sign icon-large"></i>Another social link</a></li>
 
 <li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>
+<li>
+<a href="/category/docker.html">
+    <i class="icon-folder-open icon-large"></i>Docker
+</a>
+</li>
 <li>
 <a href="/category/nodejs.html">
     <i class="icon-folder-open icon-large"></i>Nodejs

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>andy's blog</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2016-01-04T00:00:00+08:00</updated><entry><title>Docker storage</title><link href="/docker-storage.html" rel="alternate"></link><updated>2016-01-04T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-04:docker-storage.html</id><summary type="html">&lt;h1&gt;Docker 如何管理Image,Container？&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>andy's blog</title><link href="/" rel="alternate"></link><link href="/feeds/docker.atom.xml" rel="self"></link><id>/</id><updated>2016-01-04T00:00:00+08:00</updated><entry><title>Docker storage</title><link href="/docker-storage.html" rel="alternate"></link><updated>2016-01-04T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-04:docker-storage.html</id><summary type="html">&lt;h1&gt;Docker 如何管理Image,Container？&lt;/h1&gt;
 &lt;p&gt;在使用Docker之前，有一个问题始终无法回避：Docker如何高效的管理和使用Image和Container数据？
 为了搞明白这个问题，我们首先需要理解：&lt;/p&gt;
 &lt;ol&gt;
@@ -115,91 +115,4 @@ $ sudo ls /var/lib/docker/aufs/layers
 &lt;p&gt;Data Volume不会被存储驱动所控制，这就意味着所有对Data Volume的读写操作都将跳过存储驱动，而直接通过host OS来完成。用户可以挂载任意多个data volume到一个container之中，也可以多个container共享同一份data volume。&lt;/p&gt;
 &lt;p&gt;下图演示了两个Container同时挂载同一个Data Volume目录。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="image" src="https://lh3.googleusercontent.com/-uuuZMYFkWQk/VonUfwIIjYI/AAAAAAAAABI/FU8sZlZ3lsU/s757-Ic42/shared-volume.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;通过Data Volume可以减轻Container的"重量"，也可以当删除容器时保存其中有价值的数据。&lt;/p&gt;</summary></entry><entry><title>MockKoa - 一个基于Koa的API测试模拟服务器</title><link href="/mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html" rel="alternate"></link><updated>2016-01-02T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-02:mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html</id><summary type="html">&lt;h1&gt;MockKoa － 一个基于Koa的API测试服务器&lt;/h1&gt;
-&lt;p&gt;来自于andy的博客&lt;a href="&amp;#109;&amp;#97;&amp;#105;&amp;#108;&amp;#116;&amp;#111;&amp;#58;&amp;#97;&amp;#110;&amp;#100;&amp;#121;&amp;#46;&amp;#122;&amp;#104;&amp;#97;&amp;#110;&amp;#103;&amp;#116;&amp;#97;&amp;#111;&amp;#64;&amp;#104;&amp;#111;&amp;#116;&amp;#109;&amp;#97;&amp;#105;&amp;#108;&amp;#46;&amp;#99;&amp;#111;&amp;#109;"&gt;&amp;#97;&amp;#110;&amp;#100;&amp;#121;&amp;#46;&amp;#122;&amp;#104;&amp;#97;&amp;#110;&amp;#103;&amp;#116;&amp;#97;&amp;#111;&amp;#64;&amp;#104;&amp;#111;&amp;#116;&amp;#109;&amp;#97;&amp;#105;&amp;#108;&amp;#46;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;&lt;/p&gt;
-&lt;h2&gt;MockKoa是什么？&lt;/h2&gt;
-&lt;p&gt;MockKoa是一个基于Koa＋nodejs的Rest API的测试服务器，说成是框架也可以，但我认为距离框架还有一些距离。&lt;/p&gt;
-&lt;p&gt;MockKoa使用nodejs来开发，通过Koa完成主要逻辑处理，可以加载以swagger为载体的API服务。(如果不了解swagger,&lt;a href="www.swagger.io"&gt;请点击这里&lt;/a&gt;)&lt;/p&gt;
-&lt;p&gt;目前MockKoa仅仅支持swagger格式，未来会考虑支持Yaml格式，但目前还没有具体时间安排。&lt;/p&gt;
-&lt;h2&gt;MockKoa可以做什么？&lt;/h2&gt;
-&lt;p&gt;MockKoa最重要的功能就是按照模拟策略生成API返回值，针对用户发起的每个API请求都可以生成唯一准确并且满足用户预期的返回值。&lt;/p&gt;
-&lt;p&gt;返回值包括：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;响应状态码&lt;/li&gt;
-&lt;li&gt;响应body数据&lt;/li&gt;
-&lt;li&gt;响应header数据&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;响应状态码&lt;/h4&gt;
-&lt;p&gt;MockKoa可以根据用户设定的模拟策略来返回指定的状态码。MockKoa支持多种模拟策略，并且支持一定的逻辑处理，但MockKoa不会自动生成状态码，这些状态码仍然需要用户明确指定。指定的方式可以是通过swagger文件指定或者通过用户自定义代码指定。&lt;/p&gt;
-&lt;p&gt;MockKoa在返回状态码时不会校验状态码是否有效，即便用户设定需要返回的响应码为601，MockKoa也会"乖顺"的返回此值。所以需要用户自行保证状态码是否有效。&lt;/p&gt;
-&lt;p&gt;同时，MockKoa不会处理重定向请求。对于重定向请求，需要客户端来处理，MockKoa模拟的是服务端，所以不需要处理重定向请求(有一些用户问过此问题，所以补充此处说明)。&lt;/p&gt;
-&lt;h4&gt;响应body数据&lt;/h4&gt;
-&lt;p&gt;MockKoa可以根据用户设定的body数据返回。 MockKoa默认设定Content—Type为&lt;strong&gt;&lt;em&gt;*application/json&lt;/em&gt;&lt;/strong&gt;*(有些用户问过很多次，这次也补充上)。如果用户需要返回其他类型，请自行设定。假设用户使用的是swagger文件，那么可以通过下面的代码进行指定。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&amp;quot;examples&amp;quot;: {
-              &amp;quot;application/json&amp;quot;: {
-                &amp;quot;folderId&amp;quot;: 123456,
-                &amp;quot;createAt&amp;quot;: &amp;quot;2015-06-19T14:36:30&amp;quot;,
-                &amp;quot;size&amp;quot;: &amp;quot;10KB&amp;quot;
-              }
-            }
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;MockKoa同样不会检查用户所设定的Content-type是否有效，假设用户设定的Content-type是：&lt;strong&gt;app/json&lt;/strong&gt;, MockKoa也会老老实实的返回。&lt;/p&gt;
-&lt;p&gt;用户设定Body数据有两种方式：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;通过在examples中指定返回数据。（实例如上）&lt;/li&gt;
-&lt;li&gt;通过在schema中指定返回数据。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&amp;quot;definitions&amp;quot;: {
-    &amp;quot;Pet&amp;quot;: {
-      &amp;quot;properties&amp;quot;: {
-        &amp;quot;name&amp;quot;: {
-          &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
-        },
-        &amp;quot;birthday&amp;quot;: {
-          &amp;quot;type&amp;quot;: &amp;quot;integer&amp;quot;,
-          &amp;quot;format&amp;quot;: &amp;quot;int32&amp;quot;
-        },
-        &amp;quot;company&amp;quot;: {
-          &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
-        },
-        &amp;quot;sex&amp;quot;: {
-          &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
-        }
-      }
-    }
-  } 
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;MockKoa会自动生成5个Pet并且返回(5个是固定值，用户无法修改)。MockKoa在生成Pet时，会自动若干属性值，例如name，birthday，company，sex等等这些都会自动生成，除此之外，是会自动生成手机号(phone)，信用卡卡号(creditid)。但因为这些值都属于模拟计算得出，无法贴合实际情况，请用户知晓此点。&lt;/p&gt;
-&lt;h4&gt;响应Header数据&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;Header的处理未经充分测试，可能存在一些问题&lt;/strong&gt;。MockKoa会按照用户所设定的Header值返回指定的Header，但因为时间关系，这部分未经充分测试，在解析swagger文件时可能会出现用户多处定义Header信息，但MockKoa只会返回其中某一处Header的情况。&lt;/p&gt;
-&lt;h2&gt;MockKoa有哪些模拟策略？&lt;/h2&gt;
-&lt;p&gt;MockKoa目前有5种模拟策略：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;固定值返回。&lt;/li&gt;
-&lt;li&gt;顺序返回。&lt;/li&gt;
-&lt;li&gt;随机返回。&lt;/li&gt;
-&lt;li&gt;按照不同权重返回。&lt;/li&gt;
-&lt;li&gt;按照用户自定义逻辑返回。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h4&gt;固定值返回&lt;/h4&gt;
-&lt;p&gt;这种策略是最简单的策略，用户在swagger文件中，通过mockConfig.json文件指定需要返回的数据。MockKoa再收到指定的API请求时，会按图索骥检索到需返回的数据然后返回给用户。&lt;/p&gt;
-&lt;p&gt;在使用这种策略时，用户需要保证mockConfig.json文件中所指定的数据一定在swagger文件中存在。&lt;/p&gt;
-&lt;h4&gt;顺序返回&lt;/h4&gt;
-&lt;p&gt;顺序返回策略比固定值策略跟进一步，假设用户为某个API设定了：“200”，“201”，“202”三种返回值。固定值只能三选一，返回一个。但顺序返回策略，可以依次返回。&lt;/p&gt;
-&lt;p&gt;这种策略大多数应用于单元测试，可以依次测试用户端所有代码是否都可以获得预期结果。&lt;/p&gt;
-&lt;h4&gt;随机返回&lt;/h4&gt;
-&lt;p&gt;随机返回相较于前两种策略，更加贴近于线上情况。同样假设用户为某个API设定了：“200”，“400”，“500”，“504”四种返回值。 随机返回策略可以针对每次的网络请求，自动选择其中一种返回值返回。&lt;/p&gt;
-&lt;p&gt;因此通过这种策略，可以基本满足QA环境中的测试需要。&lt;/p&gt;
-&lt;p&gt;但在大数据量(&amp;gt;=100W)情景中，四种返回值总体返回概率几乎接近于1:1:1:1。如果400，500，504这样大量的出现，那么与实际线上情况会差距特别大。为了更加真实的接近线上情况，可以使用下面的模拟策略：&lt;/p&gt;
-&lt;h4&gt;按照权重返回&lt;/h4&gt;
-&lt;p&gt;我们为上述四种返回值设定不同的权重: 9:2:1:1。 同样经过100W网络请求下，MockKoa会返回69W次200，15W次400，500和504大致各出现8W次。以上数据均属于理论数据，按照统计数理论，每轮返回的数据都会有小幅波动，但总体出现比值会接近9:2:1:1。&lt;/p&gt;
-&lt;p&gt;通过这种策略，用户可以根据预估的线上情况设定不同的权重，来满足UAT环境测试需要。&lt;/p&gt;
-&lt;h2&gt;MockKoa有哪些不足？&lt;/h2&gt;
-&lt;p&gt;MockKoa目前处于Bate阶段，功能还有待完善。同时MockKoa目前没有UI，所有配置只能通过mockConfig.json来完全配置，每次修改mockConfig.json之后都需要重启MockKoa。&lt;/p&gt;
-&lt;p&gt;MockKoa UI Demo开发计划目前已经提上了开发日程，计划通过这个UI，可以让用户对MockKoa有个简单的认识，简化用户操作。&lt;/p&gt;
-&lt;h2&gt;如何下载MockKoa？&lt;/h2&gt;
-&lt;p&gt;用户可以通过访问&lt;a href="https://github.com/andy-zhangtao/MockKoa"&gt;我的github&lt;/a&gt;来获取最新的MockKoa。欢迎用户针对使用过程中发现的问题给我留言(&lt;a href="&amp;#109;&amp;#97;&amp;#105;&amp;#108;&amp;#116;&amp;#111;&amp;#58;&amp;#97;&amp;#110;&amp;#100;&amp;#121;&amp;#46;&amp;#122;&amp;#104;&amp;#97;&amp;#110;&amp;#103;&amp;#116;&amp;#97;&amp;#111;&amp;#64;&amp;#104;&amp;#111;&amp;#116;&amp;#109;&amp;#97;&amp;#105;&amp;#108;&amp;#46;&amp;#99;&amp;#111;&amp;#109;"&gt;&amp;#97;&amp;#110;&amp;#100;&amp;#121;&amp;#46;&amp;#122;&amp;#104;&amp;#97;&amp;#110;&amp;#103;&amp;#116;&amp;#97;&amp;#111;&amp;#64;&amp;#104;&amp;#111;&amp;#116;&amp;#109;&amp;#97;&amp;#105;&amp;#108;&amp;#46;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;).&lt;/p&gt;</summary></entry></feed>
+&lt;p&gt;通过Data Volume可以减轻Container的"重量"，也可以当删除容器时保存其中有价值的数据。&lt;/p&gt;</summary></entry></feed>
