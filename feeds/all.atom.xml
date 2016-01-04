@@ -45,25 +45,25 @@ Status: Downloaded newer image &lt;span class="k"&gt;for&lt;/span&gt; ubuntu:15.
 
 &lt;p&gt;如果用户再下载另外一个基于Ubuntu15.04的Image，那么Docker就只会下载当前本地目录中没有的Layer数据，已经下载的这4个Layer则不会重复下载。&lt;/p&gt;
 &lt;p&gt;我们可以通过下面的实例来演示这个过程。&lt;/p&gt;
-&lt;ol&gt;
+&lt;ul&gt;
 &lt;li&gt;首先通过创建一个Dockerfile来引入Ubuntu15.04&lt;/li&gt;
-&lt;/ol&gt;
+&lt;/ul&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;FROM ubuntu:15.04
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;ol&gt;
+&lt;ul&gt;
 &lt;li&gt;我们在新Image中的创建一个文件，并且写入Hello World。&lt;/li&gt;
-&lt;/ol&gt;
+&lt;/ul&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;FROM ubuntu:15.04
 
 RUN echo &amp;quot;Hello world&amp;quot; &amp;gt; /tmp/newfile
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;ol&gt;
+&lt;ul&gt;
 &lt;li&gt;保存Dockerfile。然后开始构建新Image：&lt;/li&gt;
-&lt;/ol&gt;
+&lt;/ul&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;    $ docker build -t changed-ubuntu .
     Sending build context to Docker daemon 2.048 kB
     Step 0 : FROM ubuntu:15.04
@@ -76,18 +76,18 @@ RUN echo &amp;quot;Hello world&amp;quot; &amp;gt; /tmp/newfile
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;ol&gt;
+&lt;ul&gt;
 &lt;li&gt;通过Docker image命令，我们可以查看到构建成功的Image：&lt;/li&gt;
-&lt;/ol&gt;
+&lt;/ul&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
 
 changed-ubuntu      latest              03b964f68d06        33 seconds ago      131.4 MB  
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;ol&gt;
+&lt;ul&gt;
 &lt;li&gt;通过Docker history命令来查看当前Image所包含的Layer集合。&lt;/li&gt;
-&lt;/ol&gt;
+&lt;/ul&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;    $ docker history changed-ubuntu
     IMAGE               CREATED              CREATED BY                                    SIZE           COMMENT
     03b964f68d06        About a minute ago   /bin/sh -c echo &amp;quot;Hello world&amp;quot; &amp;gt; /tmp/newfile    12 B                
@@ -99,9 +99,9 @@ changed-ubuntu      latest              03b964f68d06        33 seconds ago      
 
 
 &lt;p&gt;通过Docker history命令可以看到目前处于Layer集合最底层的Layer(03b964f68d06)就是我们通过"echo "Hello world" &amp;gt; /tmp/newfile"所创建的。 而其它四个Layer则是Ubuntu15.04所包含的4个Layer。&lt;/p&gt;
-&lt;ol&gt;
+&lt;ul&gt;
 &lt;li&gt;我们通过查看目录来验证是否又单独拷贝了另外4个Layer。&lt;/li&gt;
-&lt;/ol&gt;
+&lt;/ul&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;    $ sudo ls /var/lib/docker/aufs/layers
     013f3d01d24738964bb7101fa83a926181d600ebecca7206dced59669e6e6778    2bd276ed39d5fcfd3d00ce0a190beeea508332f5aec3c6a125cc619a3fdbade6
     03b964f68d06a373933bd6d61d37610a34a355c168b08dfc604f57b20647e073    6e6a100fa147e6db53b684c8516e3e2588b160fd4898b6265545d5d4edb6796d
