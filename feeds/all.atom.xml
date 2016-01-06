@@ -30,10 +30,11 @@
 
 
 &lt;p&gt;这样BIND_DIR就为空。因此就不会挂载任何目录到编译Container之中，所以即便编译成功了，也不会输出任何可执行程序。&lt;/p&gt;
-&lt;p&gt;结果方案有两个：&lt;/p&gt;
+&lt;p&gt;解决方案有三个：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;设定BINDDIR。 BINDDIR := bundles&lt;/li&gt;
 &lt;li&gt;当DOCKER_HOST有值时返回bundles。 if $(DOCKER_HOST),bundles,&lt;/li&gt;
+&lt;li&gt;在make中设定值。make BIND_DIR=bundles&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;然后再执行make，就可以在bundles目录中看到最终的可执行程序了。&lt;/p&gt;</summary></entry><entry><title>Docker输出日志的几种方式</title><link href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html" rel="alternate"></link><updated>2016-01-04T21:51:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-04:dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html</id><summary type="html">&lt;h1&gt;Docker输出日志的几种方式&lt;/h1&gt;
 &lt;p&gt;在使用Docker过程中，查看日志是必不可少的一项工作。通过Docker提供的docker logs命令可以查看指定容器所输出的日志。但此命令有一些限制范围，当前docker logs命令仅仅只能支持json-file,journald这两种日志驱动，如果container使用其它类型的日志驱动，那么logs命令将无法提取日志。&lt;/p&gt;

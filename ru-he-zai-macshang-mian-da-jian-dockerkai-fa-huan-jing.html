@@ -145,10 +145,11 @@
 
 
 <p>这样BIND_DIR就为空。因此就不会挂载任何目录到编译Container之中，所以即便编译成功了，也不会输出任何可执行程序。</p>
-<p>结果方案有两个：</p>
+<p>解决方案有三个：</p>
 <ol>
 <li>设定BINDDIR。 BINDDIR := bundles</li>
 <li>当DOCKER_HOST有值时返回bundles。 if $(DOCKER_HOST),bundles,</li>
+<li>在make中设定值。make BIND_DIR=bundles</li>
 </ol>
 <p>然后再执行make，就可以在bundles目录中看到最终的可执行程序了。</p>
                 </div><!-- /.entry-content -->
