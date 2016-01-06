@@ -90,6 +90,34 @@
       <div class="row">
         <div class="span9" id="content">
         <div class="article">
+                <h1><a href="/ru-he-zai-macshang-mian-da-jian-dockerkai-fa-huan-jing.html">如何在Mac上面搭建Docker开发环境</a></h1>
+                <div class="well small"><footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2016-01-06T15:03:00+08:00">
+        <i class="icon-calendar"></i>三 06 一月 2016
+</abbr>
+<span class="label">By</span>
+<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
+<span class="label">Category</span>
+<a href="/category/docker.html"><i class="icon-folder-open"></i>Docker</a>.
+
+
+</footer><!-- /.post-info --></div>
+                <div class="summary"><h1>如何在Mac上面搭建Docker开发环境</h1>
+<p>按照欧美技术范儿来说，开发机器十有八九都是Mac。Docker开发应该也是在Mac上面进行的，所以一开始认为直接从git上面clone docker src，然后执行make应该就大功告成。但中间还是遇到了一些挫折，所以我把过程提供出来以供以后查询备用。</p>
+<h3>从git上面clone是第一步</h3>
+<p>首先需要从git上面clone Docker source code。 Git地址是：https://github.com/docker/docker.git。
+这一步就是耗费时间，只要网络不断应该就没有问题。</p>
+<h3>在本地Mac上面安装Docker</h3>
+<p>这一步后面命令执行成功的前提。因为后面所有的步骤都是基于Docker Image执行的。所以本地一定要有Docker运行环境。因为Docker目前还不支持在原生Mac os上面执行，所以想要借助于Virtualbox来实现。 具体安装步骤可参考<a href="https://docs.docker.com/engine/installation/mac/">link</a></p>
+<h3>检测storage.googleapis.com是否可访问</h3>
+<p>Docker需要从storage.googleapis.com这里下载go的最新版本。但这个域名处于BFW监控之中，所以在大陆境内很有可能无法访问。当前此域名对应IP是216.58.197.112。 所以我的处理方法是修改Dockerfile，直接修改hosts文件。</p>
+<div class="highlight"><pre>RUN echo ...</pre></div>
+                        <a class="btn primary xsmall" href="/ru-he-zai-macshang-mian-da-jian-dockerkai-fa-huan-jing.html">more ...</a>
+                </div>
+        </div>
+        <hr />
+        <div class="article">
                 <h1><a href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html">Docker输出日志的几种方式</a></h1>
                 <div class="well small"><footer class="post-info">
 <span class="label">Date</span>
