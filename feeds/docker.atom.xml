@@ -5,7 +5,7 @@
 &lt;p&gt;首先需要从git上面clone Docker source code。 Git地址是：https://github.com/docker/docker.git。
 这一步就是耗费时间，只要网络不断应该就没有问题。&lt;/p&gt;
 &lt;h3&gt;在本地Mac上面安装Docker&lt;/h3&gt;
-&lt;p&gt;这一步后面命令执行成功的前提。因为后面所有的步骤都是基于Docker Image执行的。所以本地一定要有Docker运行环境。因为Docker目前还不支持在原生Mac os上面执行，所以想要借助于Virtualbox来实现。 具体安装步骤可参考&lt;a href="https://docs.docker.com/engine/installation/mac/"&gt;link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这一步后面命令执行成功的前提。因为后面所有的步骤都是基于Docker Image执行的。所以本地一定要有Docker运行环境。因为Docker目前还不支持在原生Mac os上面执行，所以想要借助于Virtualbox来实现。 具体安装步骤可参考&lt;a href="https://docs.docker.com/engine/installation/mac/"&gt;&amp;lt;如何在Mac上面运行Docker&amp;gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;检测storage.googleapis.com是否可访问&lt;/h3&gt;
 &lt;p&gt;Docker需要从storage.googleapis.com这里下载go的最新版本。但这个域名处于BFW监控之中，所以在大陆境内很有可能无法访问。当前此域名对应IP是216.58.197.112。 所以我的处理方法是修改Dockerfile，直接修改hosts文件。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;RUN echo 216.58.197.112  storage.googleapis.com &amp;gt;&amp;gt; /etc/hosts;curl -sSL  &amp;quot;https://storage.googleapis.com/golang/go&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;GO_VERSION&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;.linux-amd64.tar.gz&amp;quot; | tar -v -C /usr/local -xz
@@ -30,9 +30,11 @@
 
 
 &lt;p&gt;这样BIND_DIR就为空。因此就不会挂载任何目录到编译Container之中，所以即便编译成功了，也不会输出任何可执行程序。&lt;/p&gt;
-&lt;p&gt;结果方案有两个：
-1.  设定BINDDIR。 BINDDIR := bundles
-2.  当DOCKER_HOST有值时返回bundles。 if $(DOCKER_HOST),bundles,&lt;/p&gt;
+&lt;p&gt;结果方案有两个：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;设定BINDDIR。 BINDDIR := bundles&lt;/li&gt;
+&lt;li&gt;当DOCKER_HOST有值时返回bundles。 if $(DOCKER_HOST),bundles,&lt;/li&gt;
+&lt;/ol&gt;
 &lt;p&gt;然后再执行make，就可以在bundles目录中看到最终的可执行程序了。&lt;/p&gt;</summary></entry><entry><title>Docker输出日志的几种方式</title><link href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html" rel="alternate"></link><updated>2016-01-04T21:51:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-04:dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html</id><summary type="html">&lt;h1&gt;Docker输出日志的几种方式&lt;/h1&gt;
 &lt;p&gt;在使用Docker过程中，查看日志是必不可少的一项工作。通过Docker提供的docker logs命令可以查看指定容器所输出的日志。但此命令有一些限制范围，当前docker logs命令仅仅只能支持json-file,journald这两种日志驱动，如果container使用其它类型的日志驱动，那么logs命令将无法提取日志。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;那么如何查看容器所输出的日志呢？&lt;/strong&gt;&lt;/p&gt;

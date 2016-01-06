@@ -109,7 +109,7 @@
 <p>首先需要从git上面clone Docker source code。 Git地址是：https://github.com/docker/docker.git。
 这一步就是耗费时间，只要网络不断应该就没有问题。</p>
 <h3>在本地Mac上面安装Docker</h3>
-<p>这一步后面命令执行成功的前提。因为后面所有的步骤都是基于Docker Image执行的。所以本地一定要有Docker运行环境。因为Docker目前还不支持在原生Mac os上面执行，所以想要借助于Virtualbox来实现。 具体安装步骤可参考<a href="https://docs.docker.com/engine/installation/mac/">link</a></p>
+<p>这一步后面命令执行成功的前提。因为后面所有的步骤都是基于Docker Image执行的。所以本地一定要有Docker运行环境。因为Docker目前还不支持在原生Mac os上面执行，所以想要借助于Virtualbox来实现。 具体安装步骤可参考<a href="https://docs.docker.com/engine/installation/mac/">&lt;如何在Mac上面运行Docker&gt;</a></p>
 <h3>检测storage.googleapis.com是否可访问</h3>
 <p>Docker需要从storage.googleapis.com这里下载go的最新版本。但这个域名处于BFW监控之中，所以在大陆境内很有可能无法访问。当前此域名对应IP是216.58.197.112。 所以我的处理方法是修改Dockerfile，直接修改hosts文件。</p>
 <div class="highlight"><pre>RUN echo ...</pre></div>
