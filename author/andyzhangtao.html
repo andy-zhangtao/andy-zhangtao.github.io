@@ -90,6 +90,46 @@
       <div class="row">
         <div class="span9" id="content">
         <div class="article">
+                <h1><a href="/sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html">升级Docker 1.10遇到的小问题</a></h1>
+                <div class="well small"><footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2016-01-13T00:00:00+08:00">
+        <i class="icon-calendar"></i>三 13 一月 2016
+</abbr>
+<span class="label">By</span>
+<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
+<span class="label">Category</span>
+<a href="/category/docker.html"><i class="icon-folder-open"></i>Docker</a>.
+
+
+</footer><!-- /.post-info --></div>
+                <div class="summary"><h1>Docker升级到1.10遇到的小问题</h1>
+<p><br/></p>
+<p>目前Docker最新开发版本为1.10，在1.10当中，Docker从内核层面做了很多重构。将以前偶合度较高的代码通过Interface进行了接耦合，代码逻辑关系变的非常清晰。
+<br/>
+在1.10版本中，docker主要改进了以下几个方面：</p>
+<ol>
+<li>支持使用plugin。(有了这个功能以后，估计开放docker插件的人就会非常多了)</li>
+<li>增强namespaces稳定性。</li>
+<li>重新编排了Remote API。</li>
+</ol>
+<p>如果用户想要尝鲜试用1.10，那么最简单的方式就是从github上面clone docker sourcecode，然后build。</p>
+<p><br/></p>
+<p>当启动docker 1.10之后，docker需要迁移旧版本的数据。 而本人恰恰在这个环节遇到了诡异的问题。</p>
+<p><br/></p>
+<h2>起因</h2>
+<p>首先我来描述一下问题发生的步骤：</p>
+<ol>
+<li>关闭旧版本的docker。 我没有通过service docker stop的方式停止，而是直接通过kill docker process的方式。(事后证明，这种方式相当错误)</li>
+<li>将旧版本的docker替换为docker 1.10。 </li>
+<li>正常启动docker 1.10. (如果是第一次启动，建议输出debug信息，方便失败后分析原因)</li>
+</ol>
+<p>然后问题就出现了 ...</p>
+                        <a class="btn primary xsmall" href="/sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html">more ...</a>
+                </div>
+        </div>
+        <hr />
+        <div class="article">
                 <h1><a href="/ru-he-zai-macshang-mian-da-jian-dockerkai-fa-huan-jing.html">如何在Mac上面搭建Docker开发环境</a></h1>
                 <div class="well small"><footer class="post-info">
 <span class="label">Date</span>

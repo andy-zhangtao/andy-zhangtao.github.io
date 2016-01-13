@@ -1,5 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>andy's blog</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2016-01-06T15:03:00+08:00</updated><entry><title>如何在Mac上面搭建Docker开发环境</title><link href="/ru-he-zai-macshang-mian-da-jian-dockerkai-fa-huan-jing.html" rel="alternate"></link><updated>2016-01-06T15:03:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-06:ru-he-zai-macshang-mian-da-jian-dockerkai-fa-huan-jing.html</id><summary type="html">&lt;h1&gt;如何在Mac上面搭建Docker开发环境&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>andy's blog</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2016-01-13T00:00:00+08:00</updated><entry><title>升级Docker 1.10遇到的小问题</title><link href="/sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html" rel="alternate"></link><updated>2016-01-13T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-13:sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html</id><summary type="html">&lt;h1&gt;Docker升级到1.10遇到的小问题&lt;/h1&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;目前Docker最新开发版本为1.10，在1.10当中，Docker从内核层面做了很多重构。将以前偶合度较高的代码通过Interface进行了接耦合，代码逻辑关系变的非常清晰。
+&lt;br/&gt;
+在1.10版本中，docker主要改进了以下几个方面：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;支持使用plugin。(有了这个功能以后，估计开放docker插件的人就会非常多了)&lt;/li&gt;
+&lt;li&gt;增强namespaces稳定性。&lt;/li&gt;
+&lt;li&gt;重新编排了Remote API。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;如果用户想要尝鲜试用1.10，那么最简单的方式就是从github上面clone docker sourcecode，然后build。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;当启动docker 1.10之后，docker需要迁移旧版本的数据。 而本人恰恰在这个环节遇到了诡异的问题。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;起因&lt;/h2&gt;
+&lt;p&gt;首先我来描述一下问题发生的步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;关闭旧版本的docker。 我没有通过service docker stop的方式停止，而是直接通过kill docker process的方式。(事后证明，这种方式相当错误)&lt;/li&gt;
+&lt;li&gt;将旧版本的docker替换为docker 1.10。 &lt;/li&gt;
+&lt;li&gt;正常启动docker 1.10. (如果是第一次启动，建议输出debug信息，方便失败后分析原因)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;然后问题就出现了，Docker daemon提示：xxxxxx container中的config.json不存在，daemon初始化失败。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;经过&lt;/h2&gt;
+&lt;p&gt;按照以前使用docker的经验来看，是container的配置文件出了问题。因此，我首先判断以下方面是否正常：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;contaienr路径是否正常。(也就是验证一下这个路径是否存在，权限是否正确)&lt;/li&gt;
+&lt;li&gt;daemon所读取的文件是否正常.(验证文件是否存在，文件内容是否正确，文件权限是否正确)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在验证第二条时发现，这个container目录虽然存在，但只是一个空目录，没有任何文件。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;
+再启动docker 1.9，发现一切正常。继续分析日志可以发现，这个错误是在docker 1.10执行migrate时报出的。那么也就是docker1.10需要将旧container数据结构转化为新的数据结构，在转换时发现config.json为空，因此报错退出。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;那么，目前需要明确：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;migrate是否是必须的步骤?&lt;/li&gt;
+&lt;li&gt;migrate时是否每个container都要成功?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;从docker1.10的角度分析，新内核采取了新的数据结构，旧数据结构很可能支持度有限，那么迁移一定是需要做的。但是否每个container都需要迁移成功呢？
+&lt;br/&gt;
+正常情况下，每个contianer在创建时都会生成一系列的配置文件。如果某个container出现丢失配置文件的情况，那么只可能发生在create container时出现了异常，说的直白点就是：create container过程中，强行关闭了docker daemon，导致配置文件没有生成。(也就是上面所提到的强行kill的结果)&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;
+在这种情况下，因为这个container实际上没有对外提供任何服务，所以也可以认为这个container是可删的。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;
+那么就明确了，在迁移时不需要保证每个container都迁移成功。所以这个问题应该如何处理呢？&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;结果&lt;/h2&gt;
+&lt;p&gt;解决方案有两套：&lt;/p&gt;
+&lt;p&gt;方案1.    删除空目录，也就是在container目录中删除那个创建失败的container。为什么这么做呢？因为分析完代码后发现，迁移代码就是遍历container目录，然后逐个container进行迁移。因此删除掉就恢复正常。&lt;/p&gt;
+&lt;p&gt;方案2.    修改代码，当发现container迁移失败时，跳过此container，继续后面的工作。不能阻塞daemon初始化。这个方案是治根的方案。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;
+方案1最简单，而方案2最稳妥。 目前我已经fix了这个defect，docker已经将这部分fix代码merge到了1.10版本中。重新clone 1.10的代码，然后重新build就可以彻底解决这个问题。&lt;/p&gt;</summary></entry><entry><title>如何在Mac上面搭建Docker开发环境</title><link href="/ru-he-zai-macshang-mian-da-jian-dockerkai-fa-huan-jing.html" rel="alternate"></link><updated>2016-01-06T15:03:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-06:ru-he-zai-macshang-mian-da-jian-dockerkai-fa-huan-jing.html</id><summary type="html">&lt;h1&gt;如何在Mac上面搭建Docker开发环境&lt;/h1&gt;
 &lt;p&gt;按照欧美技术范儿来说，开发机器十有八九都是Mac。Docker开发应该也是在Mac上面进行的，所以一开始认为直接从git上面clone docker src，然后执行make应该就大功告成。但中间还是遇到了一些挫折，所以我把过程提供出来以供以后查询备用。&lt;/p&gt;
 &lt;h3&gt;从git上面clone是第一步&lt;/h3&gt;
 &lt;p&gt;首先需要从git上面clone Docker source code。 Git地址是：https://github.com/docker/docker.git。

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>andy's blog - Docker</title>
+    <title>升级Docker 1.10遇到的小问题</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="andy.zhangtao">
@@ -89,9 +89,20 @@
     <div class="container-fluid">
       <div class="row">
         <div class="span9" id="content">
-        <div class="article">
-                <h1><a href="/sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html">升级Docker 1.10遇到的小问题</a></h1>
-                <div class="well small"><footer class="post-info">
+<section id="content">
+        <article>
+                <header>
+                        <h1>
+                                <a href=""
+                                        rel="bookmark"
+                                        title="Permalink to 升级Docker 1.10遇到的小问题">
+                                        升级Docker 1.10遇到的小问题
+                                </a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
 <span class="label">Date</span>
 <abbr class="published" title="2016-01-13T00:00:00+08:00">
         <i class="icon-calendar"></i>三 13 一月 2016
@@ -102,8 +113,8 @@
 <a href="/category/docker.html"><i class="icon-folder-open"></i>Docker</a>.
 
 
-</footer><!-- /.post-info --></div>
-                <div class="summary"><h1>Docker升级到1.10遇到的小问题</h1>
+</footer><!-- /.post-info -->                </div>
+                <h1>Docker升级到1.10遇到的小问题</h1>
 <p><br/></p>
 <p>目前Docker最新开发版本为1.10，在1.10当中，Docker从内核层面做了很多重构。将以前偶合度较高的代码通过Interface进行了接耦合，代码逻辑关系变的非常清晰。
 <br/>
@@ -124,150 +135,54 @@
 <li>将旧版本的docker替换为docker 1.10。 </li>
 <li>正常启动docker 1.10. (如果是第一次启动，建议输出debug信息，方便失败后分析原因)</li>
 </ol>
-<p>然后问题就出现了 ...</p>
-                        <a class="btn primary xsmall" href="/sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html">more ...</a>
-                </div>
-        </div>
-        <hr />
-        <div class="article">
-                <h1><a href="/ru-he-zai-macshang-mian-da-jian-dockerkai-fa-huan-jing.html">如何在Mac上面搭建Docker开发环境</a></h1>
-                <div class="well small"><footer class="post-info">
-<span class="label">Date</span>
-<abbr class="published" title="2016-01-06T15:03:00+08:00">
-        <i class="icon-calendar"></i>三 06 一月 2016
-</abbr>
-<span class="label">By</span>
-<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
-<span class="label">Category</span>
-<a href="/category/docker.html"><i class="icon-folder-open"></i>Docker</a>.
-
-
-</footer><!-- /.post-info --></div>
-                <div class="summary"><h1>如何在Mac上面搭建Docker开发环境</h1>
-<p>按照欧美技术范儿来说，开发机器十有八九都是Mac。Docker开发应该也是在Mac上面进行的，所以一开始认为直接从git上面clone docker src，然后执行make应该就大功告成。但中间还是遇到了一些挫折，所以我把过程提供出来以供以后查询备用。</p>
-<h3>从git上面clone是第一步</h3>
-<p>首先需要从git上面clone Docker source code。 Git地址是：https://github.com/docker/docker.git。
-这一步就是耗费时间，只要网络不断应该就没有问题。</p>
-<h3>在本地Mac上面安装Docker</h3>
-<p>这一步后面命令执行成功的前提。因为后面所有的步骤都是基于Docker Image执行的。所以本地一定要有Docker运行环境。因为Docker目前还不支持在原生Mac os上面执行，所以想要借助于Virtualbox来实现。 具体安装步骤可参考<a href="https://docs.docker.com/engine/installation/mac/">&lt;如何在Mac上面运行Docker&gt;</a></p>
-<h3>检测storage.googleapis.com是否可访问</h3>
-<p>Docker需要从storage.googleapis.com这里下载go的最新版本。但这个域名处于BFW监控之中，所以在大陆境内很有可能无法访问。当前此域名对应IP是216.58.197.112。 所以我的处理方法是修改Dockerfile，直接修改hosts文件。</p>
-<div class="highlight"><pre>RUN echo ...</pre></div>
-                        <a class="btn primary xsmall" href="/ru-he-zai-macshang-mian-da-jian-dockerkai-fa-huan-jing.html">more ...</a>
-                </div>
-        </div>
-        <hr />
-        <div class="article">
-                <h1><a href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html">Docker输出日志的几种方式</a></h1>
-                <div class="well small"><footer class="post-info">
-<span class="label">Date</span>
-<abbr class="published" title="2016-01-04T21:51:00+08:00">
-        <i class="icon-calendar"></i>一 04 一月 2016
-</abbr>
-<span class="label">By</span>
-<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
-<span class="label">Category</span>
-<a href="/category/docker.html"><i class="icon-folder-open"></i>Docker</a>.
-
-
-</footer><!-- /.post-info --></div>
-                <div class="summary"><h1>Docker输出日志的几种方式</h1>
-<p>在使用Docker过程中，查看日志是必不可少的一项工作。通过Docker提供的docker logs命令可以查看指定容器所输出的日志。但此命令有一些限制范围，当前docker logs命令仅仅只能支持json-file,journald这两种日志驱动，如果container使用其它类型的日志驱动，那么logs命令将无法提取日志。</p>
-<p><strong>那么如何查看容器所输出的日志呢？</strong></p>
-<p>为了解决这个问题，我们首先来看看Docker都支持哪些类型的日志驱动。</p>
-<hr />
-<h2>Docker支持的日志驱动类型</h2>
-<p>Docker目前支持以下类型的驱动：</p>
-<table>
-<thead>
-<tr>
-<th>驱动名称</th>
-<th>是否支持logs</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>json-file</td>
-<td>true</td>
-<td></td>
-</tr>
-<tr>
-<td>journald</td>
-<td>true</td>
-<td></td>
-</tr>
-<tr>
-<td>syslog</td>
-<td>false</td>
-<td></td>
-</tr>
-<tr>
-<td>gelf</td>
-<td>false</td>
-<td></td>
-</tr>
-<tr>
-<td>fluentd</td>
-<td>false</td>
-<td></td>
-</tr>
-<tr>
-<td>awslogs</td>
-<td>false</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h2>Docker如何指定日志驱动？</h2>
-<hr />
-<p>指定日志驱动有两种方式：</p>
-<ul>
-<li>通过Daemon指定全局默认日志驱动</li>
-<li>通过Run命令指定特定日志驱动</li>
-</ul>
-<p>如果需要指定全局默认日志驱动，可以在启动Docker Daemon时指定，命令如下：</p>
-<div class="highlight"><pre>docker daemon --log-driver=json-file --log-opt labels=foo --log-opt env=foo,fizz
-</pre></div>
-
-
-<p>当执行完这条命令之后 ...</p>
-                        <a class="btn primary xsmall" href="/dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html">more ...</a>
-                </div>
-        </div>
-        <hr />
-        <div class="article">
-                <h1><a href="/docker-ru-he-guan-li-imagecontainer.html">Docker 如何管理Image,Container</a></h1>
-                <div class="well small"><footer class="post-info">
-<span class="label">Date</span>
-<abbr class="published" title="2016-01-04T00:00:00+08:00">
-        <i class="icon-calendar"></i>一 04 一月 2016
-</abbr>
-<span class="label">By</span>
-<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
-<span class="label">Category</span>
-<a href="/category/docker.html"><i class="icon-folder-open"></i>Docker</a>.
-
-
-</footer><!-- /.post-info --></div>
-                <div class="summary"><h1>Docker 如何管理Image,Container？</h1>
-<p>在使用Docker之前，有一个问题始终无法回避：Docker如何高效的管理和使用Image和Container数据？
-为了搞明白这个问题，我们首先需要理解：</p>
+<p>然后问题就出现了，Docker daemon提示：xxxxxx container中的config.json不存在，daemon初始化失败。</p>
+<p><br/></p>
+<h2>经过</h2>
+<p>按照以前使用docker的经验来看，是container的配置文件出了问题。因此，我首先判断以下方面是否正常：</p>
 <ol>
-<li>Docker如何构建和存储Image？</li>
-<li>Docker如何基于Image来创建Container？</li>
-<li>Docker如何操作Image和Container？</li>
+<li>contaienr路径是否正常。(也就是验证一下这个路径是否存在，权限是否正确)</li>
+<li>daemon所读取的文件是否正常.(验证文件是否存在，文件内容是否正确，文件权限是否正确)</li>
 </ol>
-<h2>Image和Container的基础 － Layers(文件层)</h2>
-<p>从数据结构上面来看，Docker当中所有的Image都是一系列<strong>有序</strong>只读(Read-Only)文件层(Layers)的集合。位于这个集合最顶端的文件层，我们称之为BaseImage。其它文件层都依赖于它。下图是一个Ubuntu15.04的Image示意图，这个Image包含了4个文件层。
-<img alt="image" src="https://lh3.googleusercontent.com/-D8MQPkSpeb8/VonUe0SEWKI/AAAAAAAAAAw/NXLg19gDpq4/s448-Ic42/image-layers.jpg" /></p>
-<p>当用户在这个Container中做任何写操作时，例如：在/tmp目录中新创建一个文件，Docker就会在这个集合最下面再创建一个文件层来保存这种变化。Docker当中每个文件层都有一个唯一ID(UUID)，并且每个文件层都会记录其所依赖的文件层信息。</p>
-<p>Image都是由Layers组成的，与此相对应的，所有的Container也同样是由Layers组成的。但Container与Image又一个本质区别，组成Image的Layer都是RO，而组成Container的Layer中，处于最低端的Layer是RW，其它Layer都是RO。这个RW的Layer，我们称之为Thin R/W Layer。如下图所示 ...</p>
-                        <a class="btn primary xsmall" href="/docker-ru-he-guan-li-imagecontainer.html">more ...</a>
+<p>在验证第二条时发现，这个container目录虽然存在，但只是一个空目录，没有任何文件。</p>
+<p><br/>
+再启动docker 1.9，发现一切正常。继续分析日志可以发现，这个错误是在docker 1.10执行migrate时报出的。那么也就是docker1.10需要将旧container数据结构转化为新的数据结构，在转换时发现config.json为空，因此报错退出。</p>
+<p><br/></p>
+<p>那么，目前需要明确：</p>
+<ol>
+<li>migrate是否是必须的步骤?</li>
+<li>migrate时是否每个container都要成功?</li>
+</ol>
+<p>从docker1.10的角度分析，新内核采取了新的数据结构，旧数据结构很可能支持度有限，那么迁移一定是需要做的。但是否每个container都需要迁移成功呢？
+<br/>
+正常情况下，每个contianer在创建时都会生成一系列的配置文件。如果某个container出现丢失配置文件的情况，那么只可能发生在create container时出现了异常，说的直白点就是：create container过程中，强行关闭了docker daemon，导致配置文件没有生成。(也就是上面所提到的强行kill的结果)</p>
+<p><br/>
+在这种情况下，因为这个container实际上没有对外提供任何服务，所以也可以认为这个container是可删的。</p>
+<p><br/>
+那么就明确了，在迁移时不需要保证每个container都迁移成功。所以这个问题应该如何处理呢？</p>
+<p><br/></p>
+<h2>结果</h2>
+<p>解决方案有两套：</p>
+<p>方案1.    删除空目录，也就是在container目录中删除那个创建失败的container。为什么这么做呢？因为分析完代码后发现，迁移代码就是遍历container目录，然后逐个container进行迁移。因此删除掉就恢复正常。</p>
+<p>方案2.    修改代码，当发现container迁移失败时，跳过此container，继续后面的工作。不能阻塞daemon初始化。这个方案是治根的方案。</p>
+<p><br/>
+方案1最简单，而方案2最稳妥。 目前我已经fix了这个defect，docker已经将这部分fix代码merge到了1.10版本中。重新clone 1.10的代码，然后重新build就可以彻底解决这个问题。</p>
+                </div><!-- /.entry-content -->
+                <div class="comments">
+                <h2>Comments !</h2>
+                        <div id="disqus_thread"></div>
+                        <script type="text/javascript">
+                           var disqus_identifier = "sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html";
+                           (function() {
+                                var dsq = document.createElement('script');
+                                dsq.type = 'text/javascript'; dsq.async = true;
+                                dsq.src = 'http://andy-s-blog.disqus.com/embed.js';
+                                (document.getElementsByTagName('head')[0] ||
+                                 document.getElementsByTagName('body')[0]).appendChild(dsq);
+                          })();
+                        </script>
                 </div>
-        </div>
-        <hr />
-
+        </article>
+</section>
         </div><!--/span-->
 
                 <div class="span3 well sidebar-nav" id="sidebar">
