@@ -43,7 +43,9 @@
 &lt;p&gt;&lt;br/&gt;
 在这种情况下，因为这个container实际上没有对外提供任何服务，所以也可以认为这个container是可删的。&lt;/p&gt;
 &lt;p&gt;&lt;br/&gt;
-那么就明确了，在迁移时不需要保证每个container都迁移成功。所以这个问题应该如何处理呢？&lt;/p&gt;
+那么就明确了，在迁移时不需要保证每个container都迁移成功。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;
+但这个问题应该如何处理呢？&lt;/p&gt;
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2&gt;结果&lt;/h2&gt;
 &lt;p&gt;解决方案有两套：&lt;/p&gt;
