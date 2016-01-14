@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>andy's blog</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2016-01-13T00:00:00+08:00</updated><entry><title>升级Docker 1.10遇到的小问题</title><link href="/sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html" rel="alternate"></link><updated>2016-01-13T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-13:sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html</id><summary type="html">&lt;h1&gt;Docker升级到1.10遇到的小问题&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>andy's blog</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2016-01-14T00:00:00+08:00</updated><entry><title>Linux常用命令</title><link href="/linuxchang-yong-ming-ling.html" rel="alternate"></link><updated>2016-01-14T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-14:linuxchang-yong-ming-ling.html</id><summary type="html">&lt;h1&gt;Linux常用命令&lt;/h1&gt;
+&lt;h2&gt;删除邮件&lt;/h2&gt;
+&lt;p&gt;&lt;br/&gt;
+每次登录时都会显示"you have new mail"，挺烦人的。 执行下面的命令删除掉所有邮件:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mail
+? delete *
+? q
+&lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>升级Docker 1.10遇到的小问题</title><link href="/sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html" rel="alternate"></link><updated>2016-01-13T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-13:sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html</id><summary type="html">&lt;h1&gt;Docker升级到1.10遇到的小问题&lt;/h1&gt;
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;p&gt;目前Docker最新开发版本为1.10，在1.10当中，Docker从内核层面做了很多重构。将以前偶合度较高的代码通过Interface进行了接耦合，代码逻辑关系变的非常清晰。
 &lt;br/&gt;
