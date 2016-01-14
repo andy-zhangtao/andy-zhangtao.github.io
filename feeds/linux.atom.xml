@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>andy's blog</title><link href="/" rel="alternate"></link><link href="/feeds/linux.atom.xml" rel="self"></link><id>/</id><updated>2016-01-14T00:00:00+08:00</updated><entry><title>Linux常用命令</title><link href="/linuxchang-yong-ming-ling.html" rel="alternate"></link><updated>2016-01-14T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-14:linuxchang-yong-ming-ling.html</id><summary type="html">&lt;h1&gt;Linux常用命令&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>andy's blog</title><link href="/" rel="alternate"></link><link href="/feeds/linux.atom.xml" rel="self"></link><id>/</id><updated>2016-01-14T00:00:00+08:00</updated><entry><title>Linux常用命令</title><link href="/linuxchang-yong-ming-ling.html" rel="alternate"></link><updated>2016-01-14T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-14:linuxchang-yong-ming-ling.html</id><summary type="html">&lt;h1&gt;Linux常用命令(TBC)&lt;/h1&gt;
 &lt;h2&gt;删除邮件&lt;/h2&gt;
 &lt;p&gt;&lt;br/&gt;
 每次登录时都会显示"you have new mail"，挺烦人的。 执行下面的命令删除掉所有邮件:&lt;/p&gt;
