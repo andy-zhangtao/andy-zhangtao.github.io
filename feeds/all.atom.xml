@@ -6,7 +6,16 @@
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mail
 ? delete *
 ? q
-&lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>升级Docker 1.10遇到的小问题</title><link href="/sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html" rel="alternate"></link><updated>2016-01-13T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-13:sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html</id><summary type="html">&lt;h1&gt;Docker升级到1.10遇到的小问题&lt;/h1&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;LFTP下载文件&lt;/h2&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h3&gt;多线程下载&lt;/h3&gt;
+&lt;p&gt;lftp -c "pget -n &amp;lt;线程数量&amp;gt; 文件路径"
+&lt;br/&gt;&lt;/p&gt;
+&lt;h3&gt;多线程下载＋文件重命名&lt;/h3&gt;
+&lt;p&gt;lftp -c "pget -n &amp;lt;线程数量&amp;gt; 文件路径 －o 本地文件名"&lt;/p&gt;</summary></entry><entry><title>升级Docker 1.10遇到的小问题</title><link href="/sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html" rel="alternate"></link><updated>2016-01-13T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-13:sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html</id><summary type="html">&lt;h1&gt;Docker升级到1.10遇到的小问题&lt;/h1&gt;
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;p&gt;目前Docker最新开发版本为1.10，在1.10当中，Docker从内核层面做了很多重构。将以前偶合度较高的代码通过Interface进行了接耦合，代码逻辑关系变的非常清晰。
 &lt;br/&gt;

@@ -6,4 +6,13 @@
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mail
 ? delete *
 ? q
-&lt;/pre&gt;&lt;/div&gt;</summary></entry></feed>
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;LFTP下载文件&lt;/h2&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h3&gt;多线程下载&lt;/h3&gt;
+&lt;p&gt;lftp -c "pget -n &amp;lt;线程数量&amp;gt; 文件路径"
+&lt;br/&gt;&lt;/p&gt;
+&lt;h3&gt;多线程下载＋文件重命名&lt;/h3&gt;
+&lt;p&gt;lftp -c "pget -n &amp;lt;线程数量&amp;gt; 文件路径 －o 本地文件名"&lt;/p&gt;</summary></entry></feed>
