@@ -17,4 +17,16 @@
 &lt;p&gt;lftp -c "pget -n &amp;lt;线程数量&amp;gt; 文件路径"
 &lt;br/&gt;&lt;/p&gt;
 &lt;h3&gt;多线程下载＋文件重命名&lt;/h3&gt;
-&lt;p&gt;lftp -c "pget -n &amp;lt;线程数量&amp;gt; 文件路径 －o 本地文件名"&lt;/p&gt;</summary></entry></feed>
+&lt;p&gt;lftp -c "pget -n &amp;lt;线程数量&amp;gt; 文件路径 －o 本地文件名"&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;
+&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;Sed修改文件&lt;/h2&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h3&gt;删除一行&lt;/h3&gt;
+&lt;p&gt;sed -i "2d"  &lt;file path&gt; #删除第二行
+&lt;br/&gt;&lt;/p&gt;
+&lt;h3&gt;获取行号&lt;/h3&gt;
+&lt;p&gt;sed -n -e "/&amp;lt;匹配字符串&amp;gt;/="  &lt;file path&gt; #获取匹配字符串所在行号
+&lt;br/&gt;&lt;/p&gt;
+&lt;h3&gt;使用变量&lt;/h3&gt;
+&lt;p&gt;sed -i "s/${OLDBUILD}/${MYBUILD}/" ${PWD}/${FILEPATH} #使用&lt;strong&gt;""&lt;/strong&gt;才可以引入变量&lt;/p&gt;</summary></entry></feed>

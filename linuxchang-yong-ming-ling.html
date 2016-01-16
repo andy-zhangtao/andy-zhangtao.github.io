@@ -138,6 +138,18 @@
 <br/></p>
 <h3>多线程下载＋文件重命名</h3>
 <p>lftp -c "pget -n &lt;线程数量&gt; 文件路径 －o 本地文件名"</p>
+<p><br/>
+<br/></p>
+<h2>Sed修改文件</h2>
+<p><br/></p>
+<h3>删除一行</h3>
+<p>sed -i "2d"  <file path> #删除第二行
+<br/></p>
+<h3>获取行号</h3>
+<p>sed -n -e "/&lt;匹配字符串&gt;/="  <file path> #获取匹配字符串所在行号
+<br/></p>
+<h3>使用变量</h3>
+<p>sed -i "s/${OLDBUILD}/${MYBUILD}/" ${PWD}/${FILEPATH} #使用<strong>""</strong>才可以引入变量</p>
                 </div><!-- /.entry-content -->
                 <div class="comments">
                 <h2>Comments !</h2>
