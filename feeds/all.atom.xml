@@ -30,8 +30,9 @@
 &lt;br/&gt;&lt;/p&gt;
 &lt;h3&gt;使用变量&lt;/h3&gt;
 &lt;p&gt;sed -i "s/${OLDBUILD}/${MYBUILD}/" ${PWD}/${FILEPATH} #使用&lt;strong&gt;""&lt;/strong&gt;才可以引入变量
+&lt;br/&gt;
 &lt;br/&gt;&lt;/p&gt;
-&lt;h3&gt;&amp;amp;和&amp;amp;&amp;amp;的区别&lt;/h3&gt;
+&lt;h2&gt;&amp;amp;和&amp;amp;&amp;amp;的区别&lt;/h2&gt;
 &lt;p&gt;&amp;amp;表示当前命令作为后台进程执行，不阻塞后面命令的执行。
 而&amp;amp;&amp;amp;表示只有当前面命令执行成功后才能执行后面的命令，而||则相反，只有前面命令失败之后才会执行后面的命令。
 &lt;br/&gt;&lt;/p&gt;</summary></entry><entry><title>升级Docker 1.10遇到的小问题</title><link href="/sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html" rel="alternate"></link><updated>2016-01-13T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-13:sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html</id><summary type="html">&lt;h1&gt;Docker升级到1.10遇到的小问题&lt;/h1&gt;

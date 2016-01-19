@@ -30,8 +30,9 @@
 &lt;br/&gt;&lt;/p&gt;
 &lt;h3&gt;使用变量&lt;/h3&gt;
 &lt;p&gt;sed -i "s/${OLDBUILD}/${MYBUILD}/" ${PWD}/${FILEPATH} #使用&lt;strong&gt;""&lt;/strong&gt;才可以引入变量
+&lt;br/&gt;
 &lt;br/&gt;&lt;/p&gt;
-&lt;h3&gt;&amp;amp;和&amp;amp;&amp;amp;的区别&lt;/h3&gt;
+&lt;h2&gt;&amp;amp;和&amp;amp;&amp;amp;的区别&lt;/h2&gt;
 &lt;p&gt;&amp;amp;表示当前命令作为后台进程执行，不阻塞后面命令的执行。
 而&amp;amp;&amp;amp;表示只有当前面命令执行成功后才能执行后面的命令，而||则相反，只有前面命令失败之后才会执行后面的命令。
 &lt;br/&gt;&lt;/p&gt;</summary></entry></feed>
