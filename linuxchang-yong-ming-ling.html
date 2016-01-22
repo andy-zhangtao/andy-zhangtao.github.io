@@ -161,6 +161,54 @@
 <p>&amp;表示当前命令作为后台进程执行，不阻塞后面命令的执行。
 而&amp;&amp;表示只有当前面命令执行成功后才能执行后面的命令，而||则相反，只有前面命令失败之后才会执行后面的命令。
 <br/></p>
+<h2>使用case的例子</h2>
+<div class="highlight"><pre><span class="x">case &quot;</span><span class="p">$</span><span class="nv">TYPE</span><span class="x">&quot; in</span>
+<span class="x">    all )</span>
+<span class="x">        command</span>
+<span class="x">        ;;</span>
+<span class="x">    build )</span>
+<span class="x">        command</span>
+<span class="x">        ;;</span>
+<span class="x">    replace )</span>
+<span class="x">        command</span>
+<span class="x">        ;;</span>
+<span class="x">    runuat )</span>
+<span class="x">        command</span>
+<span class="x">        ;;</span>
+<span class="x">esac</span>
+</pre></div>
+
+
+<p><br/></p>
+<h2>判断参数是否为空的例子</h2>
+<div class="highlight"><pre>TYPE=&quot;<span class="cp">${</span><span class="mi">1</span><span class="cp">}</span>&quot;
+
+t_usage()
+{
+    echo
+    echo &quot;Usage: {Type} {Projectname}&quot;
+    exit -1
+} # t_usage
+
+if [ -z &quot;<span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span>&quot; ] ; then
+    t_usage
+fi
+</pre></div>
+
+
+<p><br/></p>
+<h2>使用for循环的例子</h2>
+<div class="highlight"><pre>WEB_BUILD[0]=&quot;command&quot;
+WEB_BUILD[1]=&quot;command&quot;
+WEB_BUILD[2]=&quot;command &quot; 
+
+for i in &quot;<span class="cp">${</span><span class="err">!</span><span class="n">WEB_BUILD</span><span class="p">[</span><span class="err">@</span><span class="p">]</span><span class="cp">}</span>&quot;; do 
+    bash -c &quot;<span class="cp">${</span><span class="n">WEB_BUILD</span><span class="p">[</span><span class="err">$</span><span class="n">i</span><span class="p">]</span><span class="cp">}</span>&quot; &gt;&gt; /tmp/build.log 
+done
+</pre></div>
+
+
+<p><br/></p>
                 </div><!-- /.entry-content -->
                 <div class="comments">
                 <h2>Comments !</h2>

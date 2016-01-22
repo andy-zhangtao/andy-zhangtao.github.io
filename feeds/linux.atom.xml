@@ -35,4 +35,52 @@
 &lt;h2&gt;&amp;amp;和&amp;amp;&amp;amp;的区别&lt;/h2&gt;
 &lt;p&gt;&amp;amp;表示当前命令作为后台进程执行，不阻塞后面命令的执行。
 而&amp;amp;&amp;amp;表示只有当前面命令执行成功后才能执行后面的命令，而||则相反，只有前面命令失败之后才会执行后面的命令。
-&lt;br/&gt;&lt;/p&gt;</summary></entry></feed>
+&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;使用case的例子&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;case &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;TYPE&lt;/span&gt;&lt;span class="x"&gt;&amp;quot; in&lt;/span&gt;
+&lt;span class="x"&gt;    all )&lt;/span&gt;
+&lt;span class="x"&gt;        command&lt;/span&gt;
+&lt;span class="x"&gt;        ;;&lt;/span&gt;
+&lt;span class="x"&gt;    build )&lt;/span&gt;
+&lt;span class="x"&gt;        command&lt;/span&gt;
+&lt;span class="x"&gt;        ;;&lt;/span&gt;
+&lt;span class="x"&gt;    replace )&lt;/span&gt;
+&lt;span class="x"&gt;        command&lt;/span&gt;
+&lt;span class="x"&gt;        ;;&lt;/span&gt;
+&lt;span class="x"&gt;    runuat )&lt;/span&gt;
+&lt;span class="x"&gt;        command&lt;/span&gt;
+&lt;span class="x"&gt;        ;;&lt;/span&gt;
+&lt;span class="x"&gt;esac&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;判断参数是否为空的例子&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;TYPE=&amp;quot;&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;&amp;quot;
+
+t_usage()
+{
+    echo
+    echo &amp;quot;Usage: {Type} {Projectname}&amp;quot;
+    exit -1
+} # t_usage
+
+if [ -z &amp;quot;&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;TYPE&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;&amp;quot; ] ; then
+    t_usage
+fi
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;使用for循环的例子&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;WEB_BUILD[0]=&amp;quot;command&amp;quot;
+WEB_BUILD[1]=&amp;quot;command&amp;quot;
+WEB_BUILD[2]=&amp;quot;command &amp;quot; 
+
+for i in &amp;quot;&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="err"&gt;!&lt;/span&gt;&lt;span class="n"&gt;WEB_BUILD&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;&amp;quot;; do 
+    bash -c &amp;quot;&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;WEB_BUILD&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;&amp;quot; &amp;gt;&amp;gt; /tmp/build.log 
+done
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;</summary></entry></feed>
