@@ -4,26 +4,26 @@
 &lt;br/&gt;&lt;/p&gt;
 &lt;h2&gt;何谓图形数据库&lt;/h2&gt;
 &lt;p&gt;&lt;br/&gt;
-在我们生存的实际世界当中，到处都存在着"关系"。世界当中没有独立存在的事物，在我们身边充斥着大量的，相互交织的各种关系。
-&lt;br/&gt;
-如果需要处理这些相互交织的关系数据，凭借关系型数据库是无法完成的。此时，就需要一种以关系为核心，并且可以高效存储，高效处理的数据库。
-&lt;br/&gt;
-相对于图形数据库而言，关系型数据库虽然也可以计算这些"关系"数据，但计算的代价却是异常昂贵。得益于图形数据库天生以"关系"为核心，因此其在检索关系数据时非常高效，目前可以支持每颗CPU每秒处理百万次关系检索，效率比RDBMS高出好几个数量级。
-&lt;br/&gt;
-那图形数据库会替代RDBMS吗？首先来说，两者适用场景不同。图形数据库更加侧重于处理海量数据下的，高度链接的关系拓扑关系和复杂的查询需求，而这些恰恰不是RDBMS的强项。
-&lt;br/&gt;
+在我们生存的实际世界当中，到处都存在着"关系"。世界当中没有独立存在的事物，在我们身边充斥着大量的，相互交织的各种关系。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;
+如果需要处理这些相互交织的关系数据，凭借关系型数据库是无法完成的。此时，就需要一种以关系为核心，并且可以高效存储，高效处理的数据库。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;
+相对于图形数据库而言，关系型数据库虽然也可以计算这些"关系"数据，但计算的代价却是异常昂贵。得益于图形数据库天生以"关系"为核心，因此其在检索关系数据时非常高效，目前可以支持每颗CPU每秒处理百万次关系检索，效率比RDBMS高出好几个数量级。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;
+那图形数据库会替代RDBMS吗？首先来说，两者适用场景不同。图形数据库更加侧重于处理海量数据下的，高度链接的关系拓扑关系和复杂的查询需求，而这些恰恰不是RDBMS的强项。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;
 &lt;img alt="image" src="https://lh3.googleusercontent.com/s8jMKkYD6xAtGxvN57IAm2yQl-DXX7U_-7iZ3WC20UQXRQFAblm_hDZsRuuxkRmqYdis4ywTXSM--zBITBTbxatf3xpXaPAC_vs_pvkQIxybJpccpXuoTihLd8qNDNNNcV8hXYvUjWYPsJB5F1c12O2h-AEKpybswKAfAj7BDZwmquwq-Sqkrjb_YbvCLyv4LHa2l1olv4gnpDShws3TjNSQFbZPG_trsRxz25d0z47Mk6PRuI-C8O0M6T9sr7G6wgJ0qyFiU9D6RSIlEjPMUi_gtX4UWA7_EjEP0C5dHtjDGP_FsgVuylG83a5ISDWCuGOktxRaaC1XaJQus6ySdCxjXZAcQt1IbaCLTYju5EN5r6tUZR4pNL7KikOWlk8p1kYF9AbnZdQKdfIHMsPam3_eLPo9V5UA15I-rvEDFqEl66vAyusoRknl7qGjOA3wrw1Oro9Lv1aq9acsWaIVAo0p_JHSKAO8-8ui6FDplAu_MjssTlxqRn10HWwFOEpr9S5OdvFfH3i_7JhMH6PO-zNjuaipr0lYBOcCobHCkUeLhs6i8x2Sci8a7gh4sHVApRk=w283-h323-no" /&gt;
 &lt;br/&gt;&lt;/p&gt;
 &lt;h2&gt;图形数据库使用的数据模型&lt;/h2&gt;
 &lt;p&gt;&lt;br/&gt;
-如果读者接触过对象模型或者实体图，那么想必对下面的模型必然不陌生。在图形数据库模型中，一个实体称之为一个节点(node)，每个node都有非常多的属性，这些属性通过key-value来表示。相同的node在不同的场景当中可以拥有不同的标签信息(lable)。而这些Lable信息，除了可以用来标记node之外，也可以用来附加一些metadata(例如索引信息或者约束信息等).
-&lt;br/&gt;
-&lt;img alt="image" src="https://lh3.googleusercontent.com/YOI-JTUEhROm2H5tnjbuvd_eGuYcnNn1byjlsfu4UpkQZP1TJAkEZbUA_vgDEW_XiapmWFJe1IgLMiCLGit1W2EEJo_CoANCybOK78qGoI7zsT9QNKDtiOMLD1-VEp2irRJxsVGnvt6cGKG0uCc2rpK6njgJxeYUSoG5rLt2NWo1giNp4yXFPMR6FN8L9f2-63cx4WfbyQ7JkxX5Gb8YNMD0jXGKTe0FJtQsvwqlqcQKJ2xOYmZ7HfY-6DAZ8Q3O3aEneIbStOEK_-tB0Bjr86n3gfhGbiign49icpIuBRKC3GH6hrl4BJwjKfrSvfsS5dIA1RjbxJF19sf6c3j6h3zV62ragk_-Q21BSMjfeCA-NcHqaT-IBWNx_OfUAbd_Md2LcxI3wRTuEv9zFck_Ie4xZUqyx0-VUaUC8HGjzG8v1oG7ZR2ufz982s9S4GcDffVmMyvRaRSB2H0MemWrd55DzjZ-wQNJUaiT2hdHOtPzXCMh_LgWGBruVgAJXbFic0fIRA-QC-kqg1IhtNwKJeoduEEE-thnlFKi_oi0AymGiqVp-op6EDl9HKhIFiizjQk=w730-h475-no" /&gt;
-&lt;br/&gt;
-而在两个节点之间，有向并且语义清楚的连接就称之为关系。
-&lt;br/&gt;
-通常来说，一个关系包括方向，类型，起点node和结束node四个要素。而对于node来说，一个关系则可以同时拥有多个属性。例如权重，代价，距离，级别，新鲜度或者优势度等等。因为在图形数据库当中，维护一条关系是一个代价非常小的事情，所以两个节点之间可以在不带来额外性能损失的情况下，拥有无限条的关系或者属性。
-&lt;br/&gt;
-但有一点需要注意，尽管关系是有向的，但关系本身却不关心方向。只有node才会关心方向。
-&lt;br/&gt;
+如果读者接触过对象模型或者实体图，那么想必对下面的模型必然不陌生。在图形数据库模型中，一个实体称之为一个节点(node)，每个node都有非常多的属性，这些属性通过key-value来表示。相同的node在不同的场景当中可以拥有不同的标签信息(lable)。而这些Lable信息，除了可以用来标记node之外，也可以用来附加一些metadata(例如索引信息或者约束信息等).&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;
+&lt;img alt="image" src="https://lh3.googleusercontent.com/YOI-JTUEhROm2H5tnjbuvd_eGuYcnNn1byjlsfu4UpkQZP1TJAkEZbUA_vgDEW_XiapmWFJe1IgLMiCLGit1W2EEJo_CoANCybOK78qGoI7zsT9QNKDtiOMLD1-VEp2irRJxsVGnvt6cGKG0uCc2rpK6njgJxeYUSoG5rLt2NWo1giNp4yXFPMR6FN8L9f2-63cx4WfbyQ7JkxX5Gb8YNMD0jXGKTe0FJtQsvwqlqcQKJ2xOYmZ7HfY-6DAZ8Q3O3aEneIbStOEK_-tB0Bjr86n3gfhGbiign49icpIuBRKC3GH6hrl4BJwjKfrSvfsS5dIA1RjbxJF19sf6c3j6h3zV62ragk_-Q21BSMjfeCA-NcHqaT-IBWNx_OfUAbd_Md2LcxI3wRTuEv9zFck_Ie4xZUqyx0-VUaUC8HGjzG8v1oG7ZR2ufz982s9S4GcDffVmMyvRaRSB2H0MemWrd55DzjZ-wQNJUaiT2hdHOtPzXCMh_LgWGBruVgAJXbFic0fIRA-QC-kqg1IhtNwKJeoduEEE-thnlFKi_oi0AymGiqVp-op6EDl9HKhIFiizjQk=w730-h475-no" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;
+而在两个节点之间，有向并且语义清楚的连接就称之为关系。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;
+通常来说，一个关系包括方向，类型，起点node和结束node四个要素。而对于node来说，一个关系则可以同时拥有多个属性。例如权重，代价，距离，级别，新鲜度或者优势度等等。因为在图形数据库当中，维护一条关系是一个代价非常小的事情，所以两个节点之间可以在不带来额外性能损失的情况下，拥有无限条的关系或者属性。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;
+但有一点需要注意，尽管关系是有向的，但关系本身却不关心方向。只有node才会关心方向。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;
 虽然关系很便宜，但在图形数据库当中却有一条铁的纪律:"不允许存在死链"。因为每条关系都必须存在起始node和结束node，所以用户无法在删除所有关系之前删除掉与之相关联的node。用户可以认为，一条存在的关系必然会连接两个存在的node。&lt;/p&gt;</summary></entry></feed>
