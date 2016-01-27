@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>andy's blog</title>
+    <title>andy's blog - GraphDB</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="andy.zhangtao">
@@ -74,7 +74,7 @@
 						<i class="icon-folder-open icon-large"></i>Golang
 					</a>
                   </li>
-                  <li >
+                  <li class="active">
                     <a href="/category/graphdb.html">
 						<i class="icon-folder-open icon-large"></i>GraphDB
 					</a>
@@ -104,28 +104,49 @@
     <div class="container-fluid">
       <div class="row">
         <div class="span9" id="content">
-<section id="content">
-<h1>Archives for andy's blog</h1>
+        <div class="article">
+                <h1><a href="/tu-xing-shu-ju-ku-1.html">图形数据库-1</a></h1>
+                <div class="well small"><footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2016-01-27T00:00:00+08:00">
+        <i class="icon-calendar"></i>三 27 一月 2016
+</abbr>
+<span class="label">By</span>
+<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
+<span class="label">Category</span>
+<a href="/category/graphdb.html"><i class="icon-folder-open"></i>GraphDB</a>.
 
-<dl>
-	<dt>三 27 一月 2016</dt>
-	<dd><a href='tu-xing-shu-ju-ku-1.html'>图形数据库-1</a></dd>
-	<dt>二 19 一月 2016</dt>
-	<dd><a href='ru-he-kua-ping-tai-bian-yi-golang.html'>如何跨平台编译Golang</a></dd>
-	<dt>四 14 一月 2016</dt>
-	<dd><a href='linuxchang-yong-ming-ling.html'>Linux常用命令</a></dd>
-	<dt>三 13 一月 2016</dt>
-	<dd><a href='sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html'>升级Docker 1.10遇到的小问题</a></dd>
-	<dt>三 06 一月 2016</dt>
-	<dd><a href='ru-he-zai-macshang-mian-da-jian-dockerkai-fa-huan-jing.html'>如何在Mac上面搭建Docker开发环境</a></dd>
-	<dt>一 04 一月 2016</dt>
-	<dd><a href='dockershu-chu-ri-zhi-de-ji-chong-fang-shi.html'>Docker输出日志的几种方式</a></dd>
-	<dt>一 04 一月 2016</dt>
-	<dd><a href='docker-ru-he-guan-li-imagecontainer.html'>Docker 如何管理Image,Container</a></dd>
-	<dt>六 02 一月 2016</dt>
-	<dd><a href='mockkoa-yi-ge-ji-yu-koade-apice-shi-mo-ni-fu-wu-qi.html'>MockKoa - 一个基于Koa的API测试模拟服务器</a></dd>
-</dl>
-</section>
+
+</footer><!-- /.post-info --></div>
+                <div class="summary"><h1>图形数据库(GraphDB)</h1>
+<p><br/>
+<br/></p>
+<h2>何谓图形数据库</h2>
+<p><br/>
+在我们生存的实际世界当中，到处都存在着"关系"。世界当中没有独立存在的事物，在我们身边充斥着大量的，相互交织的各种关系。
+<br/>
+如果需要处理这些相互交织的关系数据，凭借关系型数据库是无法完成的。此时，就需要一种以关系为核心，并且可以高效存储，高效处理的数据库。
+<br/>
+相对于图形数据库而言，关系型数据库虽然也可以计算这些"关系"数据，但计算的代价却是异常昂贵。得益于图形数据库天生以"关系"为核心，因此其在检索关系数据时非常高效，目前可以支持每颗CPU每秒处理百万次关系检索，效率比RDBMS高出好几个数量级。
+<br/>
+那图形数据库会替代RDBMS吗？首先来说，两者适用场景不同。图形数据库更加侧重于处理海量数据下的，高度链接的关系拓扑关系和复杂的查询需求，而这些恰恰不是RDBMS的强项。
+<br/>
+<img alt="image" src="https://accounts.google.com/b/0/ServiceNotAllowed?service=lh2&amp;continue=https%3A%2F%2Fpicasaweb.google.com%2Flh%2Flogin%3Fcontinue%3Dhttps%253A%252F%252Fpicasaweb.google.com%252Flh%252Fsredir%253Funame%253D113877379386427536330%2526target%253DPHOTO%2526id%253D6244288386283822306" />
+<br/></p>
+<h2>图形数据库使用的数据模型</h2>
+<p><br/>
+如果读者接触过对象模型或者实体图，那么想必对下面的模型必然不陌生。在图形数据库模型中，一个实体称之为一个节点(node)，每个node都有非常多的属性，这些属性通过key-value来表示。相同的node在不同的场景当中可以拥有不同的标签信息(lable)。而这些Lable信息，除了可以用来标记node之外，也可以用来附加一些metadata(例如索引信息或者约束信息等).
+<br/>
+<img alt="image" src="https://accounts.google.com/ServiceLogin?hl=en_US&amp;continue=https%3A%2F%2Fpicasaweb.google.com%2Flh%2Flogin%3Fcontinue%3Dhttps%253A%252F%252Fpicasaweb.google.com%252Flh%252Fsredir%253Funame%253D113877379386427536330%2526target%253DPHOTO%2526id%253D6244288576085086322&amp;service=lh2&amp;ltmpl=gp&amp;passive=true" />
+<br/>
+而在两个节点之间，有向并且语义清楚的连接就称之为关系。
+<br/>
+通常来说，一个关系包括方向 ...</br/></br/></br/></br/></p>
+                        <a class="btn primary xsmall" href="/tu-xing-shu-ju-ku-1.html">more ...</a>
+                </div>
+        </div>
+        <hr />
+
         </div><!--/span-->
 
                 <div class="span3 well sidebar-nav" id="sidebar">
