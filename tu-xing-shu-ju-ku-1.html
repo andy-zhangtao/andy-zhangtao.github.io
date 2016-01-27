@@ -142,13 +142,13 @@
 <br/>
 那图形数据库会替代RDBMS吗？首先来说，两者适用场景不同。图形数据库更加侧重于处理海量数据下的，高度链接的关系拓扑关系和复杂的查询需求，而这些恰恰不是RDBMS的强项。
 <br/>
-<img alt="image" src="https://goo.gl/photos/9f5Un5smf4kanEgL8" />
+<img alt="image" src="https://lh3.googleusercontent.com/s8jMKkYD6xAtGxvN57IAm2yQl-DXX7U_-7iZ3WC20UQXRQFAblm_hDZsRuuxkRmqYdis4ywTXSM--zBITBTbxatf3xpXaPAC_vs_pvkQIxybJpccpXuoTihLd8qNDNNNcV8hXYvUjWYPsJB5F1c12O2h-AEKpybswKAfAj7BDZwmquwq-Sqkrjb_YbvCLyv4LHa2l1olv4gnpDShws3TjNSQFbZPG_trsRxz25d0z47Mk6PRuI-C8O0M6T9sr7G6wgJ0qyFiU9D6RSIlEjPMUi_gtX4UWA7_EjEP0C5dHtjDGP_FsgVuylG83a5ISDWCuGOktxRaaC1XaJQus6ySdCxjXZAcQt1IbaCLTYju5EN5r6tUZR4pNL7KikOWlk8p1kYF9AbnZdQKdfIHMsPam3_eLPo9V5UA15I-rvEDFqEl66vAyusoRknl7qGjOA3wrw1Oro9Lv1aq9acsWaIVAo0p_JHSKAO8-8ui6FDplAu_MjssTlxqRn10HWwFOEpr9S5OdvFfH3i_7JhMH6PO-zNjuaipr0lYBOcCobHCkUeLhs6i8x2Sci8a7gh4sHVApRk=w283-h323-no" />
 <br/></p>
 <h2>图形数据库使用的数据模型</h2>
 <p><br/>
 如果读者接触过对象模型或者实体图，那么想必对下面的模型必然不陌生。在图形数据库模型中，一个实体称之为一个节点(node)，每个node都有非常多的属性，这些属性通过key-value来表示。相同的node在不同的场景当中可以拥有不同的标签信息(lable)。而这些Lable信息，除了可以用来标记node之外，也可以用来附加一些metadata(例如索引信息或者约束信息等).
 <br/>
-<img alt="image" src="https://goo.gl/photos/wxipk9tB8B3Tw45Z6" />
+<img alt="image" src="https://lh3.googleusercontent.com/YOI-JTUEhROm2H5tnjbuvd_eGuYcnNn1byjlsfu4UpkQZP1TJAkEZbUA_vgDEW_XiapmWFJe1IgLMiCLGit1W2EEJo_CoANCybOK78qGoI7zsT9QNKDtiOMLD1-VEp2irRJxsVGnvt6cGKG0uCc2rpK6njgJxeYUSoG5rLt2NWo1giNp4yXFPMR6FN8L9f2-63cx4WfbyQ7JkxX5Gb8YNMD0jXGKTe0FJtQsvwqlqcQKJ2xOYmZ7HfY-6DAZ8Q3O3aEneIbStOEK_-tB0Bjr86n3gfhGbiign49icpIuBRKC3GH6hrl4BJwjKfrSvfsS5dIA1RjbxJF19sf6c3j6h3zV62ragk_-Q21BSMjfeCA-NcHqaT-IBWNx_OfUAbd_Md2LcxI3wRTuEv9zFck_Ie4xZUqyx0-VUaUC8HGjzG8v1oG7ZR2ufz982s9S4GcDffVmMyvRaRSB2H0MemWrd55DzjZ-wQNJUaiT2hdHOtPzXCMh_LgWGBruVgAJXbFic0fIRA-QC-kqg1IhtNwKJeoduEEE-thnlFKi_oi0AymGiqVp-op6EDl9HKhIFiizjQk=w730-h475-no" />
 <br/>
 而在两个节点之间，有向并且语义清楚的连接就称之为关系。
 <br/>
