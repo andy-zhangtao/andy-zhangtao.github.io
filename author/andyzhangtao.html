@@ -105,6 +105,42 @@
       <div class="row">
         <div class="span9" id="content">
         <div class="article">
+                <h1><a href="/tu-xing-shu-ju-ku-2.html">图形数据库-2</a></h1>
+                <div class="well small"><footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2016-01-28T00:00:00+08:00">
+        <i class="icon-calendar"></i>四 28 一月 2016
+</abbr>
+<span class="label">By</span>
+<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
+<span class="label">Category</span>
+<a href="/category/graphdb.html"><i class="icon-folder-open"></i>GraphDB</a>.
+
+
+</footer><!-- /.post-info --></div>
+                <div class="summary"><h1>图形数据库(GraphDB)2 - Graph和RDBMS的区别</h1>
+<p><br/>
+如果您对此文章感兴趣或者有其它不同观点，欢迎发邮件至<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#121;&#46;&#122;&#104;&#97;&#110;&#103;&#116;&#97;&#111;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#97;&#110;&#100;&#121;&#46;&#122;&#104;&#97;&#110;&#103;&#116;&#97;&#111;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a></p>
+<p><br/>
+本文主要记录了目前使用最多的GraphDB-neo4j和RDBMS的区别。同时附带介绍了如何将数据从RDBMS当中迁移到Neo4j中。</p>
+<p><br/>
+RDBMS数据库自从上个世纪80年代开始出现并且一直演进到现在，占据了数据库大多数市场份额。RDBMS强调数据是结构化的，并且通过列来表示数据的各项属性，同时用行来聚合具有相同属性的数据。而这种以结构化数据为核心的理念，非常适合计算机进行解析处理。</p>
+<p><br/>
+在RDBMS当中，如果需要关联不同的数据，那么只能通过主外健的方式进行。换言之，有主外健最好，如果没有主外键，那么就需要额外再创建主外健关系。这样做有利有弊，有利的一方面是不会破坏数据的结构性。而弊端则是引入主外键后，会大大增加不同数据之间的模型复杂度。而增加的模型复杂度又会导致需要加大计算代码，所以对于RDBMS来说，如何优化SQL语句就是一项长期而艰巨的任务。</p>
+<p><img alt="image" src="https://lh3.googleusercontent.com/M3m83HOldFJ2rkAAoQ18cP3iyM72JxZftfUOdRyhQFzKUFZfAgPu6Fr12iL3gL9Zxwn9C0oKsD84UtWf0d6WgfXFeL1E8ueLzeEo-sC677KR49HtmpwE5gaeM0Vog8Hdxy2hqlhhGOrmBVfaC7acpjFY1LwsO0LN6nFeU65-aiCPdwF_XM1Vv0pYXSt-dysP0M1GfIhcBnzFK4EVewaCwuuUFgJS8pUxrmOCR1QyVy88FKbVC5hTJweB1e4jIagSKrHarmDbT7q4d11FXkQm23p5MdyfQx-BJ0-IcK8FL6TrK6IENVu-gEqr9GdeeeKOPVsgEbMoUXlYP1Yd7dc5VBrJLxkVoqSx6V8qxog4B35QS_3wfax1O9xNCKtiWsklOUbgbRc2LHHB28ZfRH48qXs4VsvMvfGpAmeW6eqJqZYhEk67CcSzl8EQgqhc_8V1NpMQ0f8MZhRBHtG2N8LCvFQieX7ALMW82k39OiVTPJb6-6qco2AAko6zGI2X2THjdimMoguilGzJZnEXe68DyFJNFNY6KicZi6DW9XivpZKGcY-M0mJzzZVkfxmBUHHBMeI=w1192-h632-no" />
+<br/>
+上图是一对多的情况，这种场景相对而言还容易处理。如果遇到多对多的时候怎么办呢？ 传统的做法就是将多对多的模型转化为1对多的模型，如果无法转化。那么就需要再引入一张表来单独存储多对多的关联关系。 而引入这些表之后，势必将会加大SQL语句复杂度，增大计算开销。</p>
+<p><br/>
+尽管，目前已经有很多优化SQL的解决方案，也有很多可以简化数据模型的解决方案。但不可否认的是，因为RDBMS对于结构化数据至上的核心理念，导致在很多应用场景下，在处理这些复杂数据模型时，除了业务层面做出妥协，RDBMS没有其它好的方案。</p>
+<p><br/></p>
+<h2>从RDBMS转移到GraphDB</h2>
+<p><br/>
+在GraphDB当中，关系是 ...</br/></p>
+                        <a class="btn primary xsmall" href="/tu-xing-shu-ju-ku-2.html">more ...</a>
+                </div>
+        </div>
+        <hr />
+        <div class="article">
                 <h1><a href="/tu-xing-shu-ju-ku-1.html">图形数据库-1</a></h1>
                 <div class="well small"><footer class="post-info">
 <span class="label">Date</span>
