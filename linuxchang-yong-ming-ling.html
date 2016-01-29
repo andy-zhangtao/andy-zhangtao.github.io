@@ -129,7 +129,7 @@
 
 
 </footer><!-- /.post-info -->                </div>
-                <h1>Linux常用命令(TBC)</h1>
+                <h1>Linux常用命令(TBD)</h1>
 <h2>删除邮件</h2>
 <p><br/>
 每次登录时都会显示"you have new mail"，挺烦人的。 执行下面的命令删除掉所有邮件:</p>
@@ -210,6 +210,19 @@ WEB_BUILD[2]=&quot;command &quot;
 for i in &quot;<span class="cp">${</span><span class="err">!</span><span class="n">WEB_BUILD</span><span class="p">[</span><span class="err">@</span><span class="p">]</span><span class="cp">}</span>&quot;; do 
     bash -c &quot;<span class="cp">${</span><span class="n">WEB_BUILD</span><span class="p">[</span><span class="err">$</span><span class="n">i</span><span class="p">]</span><span class="cp">}</span>&quot; &gt;&gt; /tmp/build.log 
 done
+</pre></div>
+
+
+<p><br/></p>
+<h2>通过ftp下载多个文件时关闭提示</h2>
+<div class="highlight"><pre>ftp&gt; prompt
+ftp&gt; mget *
+</pre></div>
+
+
+<p><br/></p>
+<h2>通过Lftp镜像远程目录</h2>
+<div class="highlight"><pre>lftp -e &quot;mirror -P &lt;并行下载文件个数&gt; &quot; &lt;FTP/SFTP IP/Hostname&gt;
 </pre></div>
 
 

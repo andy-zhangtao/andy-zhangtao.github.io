@@ -130,7 +130,7 @@ RUN cd /usr/src/go/src \
 &lt;br/&gt;
 也可以通过下面方式只编译特定平台：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;docker run --rm -v &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$PWD&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;:/usr/src/myapp -w /usr/src/myapp -e &lt;span class="nv"&gt;GOOS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;windows -e &lt;span class="nv"&gt;GOARCH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;386&lt;/span&gt; golang:1.4.3-cross go build -v
-&lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>Linux常用命令</title><link href="/linuxchang-yong-ming-ling.html" rel="alternate"></link><updated>2016-01-14T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-14:linuxchang-yong-ming-ling.html</id><summary type="html">&lt;h1&gt;Linux常用命令(TBC)&lt;/h1&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>Linux常用命令</title><link href="/linuxchang-yong-ming-ling.html" rel="alternate"></link><updated>2016-01-14T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-14:linuxchang-yong-ming-ling.html</id><summary type="html">&lt;h1&gt;Linux常用命令(TBD)&lt;/h1&gt;
 &lt;h2&gt;删除邮件&lt;/h2&gt;
 &lt;p&gt;&lt;br/&gt;
 每次登录时都会显示"you have new mail"，挺烦人的。 执行下面的命令删除掉所有邮件:&lt;/p&gt;
@@ -211,6 +211,19 @@ WEB_BUILD[2]=&amp;quot;command &amp;quot;
 for i in &amp;quot;&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="err"&gt;!&lt;/span&gt;&lt;span class="n"&gt;WEB_BUILD&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;&amp;quot;; do 
     bash -c &amp;quot;&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;WEB_BUILD&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;&amp;quot; &amp;gt;&amp;gt; /tmp/build.log 
 done
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;通过ftp下载多个文件时关闭提示&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ftp&amp;gt; prompt
+ftp&amp;gt; mget *
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;通过Lftp镜像远程目录&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;lftp -e &amp;quot;mirror -P &amp;lt;并行下载文件个数&amp;gt; &amp;quot; &amp;lt;FTP/SFTP IP/Hostname&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

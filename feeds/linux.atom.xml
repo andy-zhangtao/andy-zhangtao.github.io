@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>andy's blog</title><link href="/" rel="alternate"></link><link href="/feeds/linux.atom.xml" rel="self"></link><id>/</id><updated>2016-01-14T00:00:00+08:00</updated><entry><title>Linux常用命令</title><link href="/linuxchang-yong-ming-ling.html" rel="alternate"></link><updated>2016-01-14T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-14:linuxchang-yong-ming-ling.html</id><summary type="html">&lt;h1&gt;Linux常用命令(TBC)&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>andy's blog</title><link href="/" rel="alternate"></link><link href="/feeds/linux.atom.xml" rel="self"></link><id>/</id><updated>2016-01-14T00:00:00+08:00</updated><entry><title>Linux常用命令</title><link href="/linuxchang-yong-ming-ling.html" rel="alternate"></link><updated>2016-01-14T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-14:linuxchang-yong-ming-ling.html</id><summary type="html">&lt;h1&gt;Linux常用命令(TBD)&lt;/h1&gt;
 &lt;h2&gt;删除邮件&lt;/h2&gt;
 &lt;p&gt;&lt;br/&gt;
 每次登录时都会显示"you have new mail"，挺烦人的。 执行下面的命令删除掉所有邮件:&lt;/p&gt;
@@ -80,6 +80,19 @@ WEB_BUILD[2]=&amp;quot;command &amp;quot;
 for i in &amp;quot;&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="err"&gt;!&lt;/span&gt;&lt;span class="n"&gt;WEB_BUILD&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;&amp;quot;; do 
     bash -c &amp;quot;&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;WEB_BUILD&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;&amp;quot; &amp;gt;&amp;gt; /tmp/build.log 
 done
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;通过ftp下载多个文件时关闭提示&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ftp&amp;gt; prompt
+ftp&amp;gt; mget *
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;通过Lftp镜像远程目录&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;lftp -e &amp;quot;mirror -P &amp;lt;并行下载文件个数&amp;gt; &amp;quot; &amp;lt;FTP/SFTP IP/Hostname&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
