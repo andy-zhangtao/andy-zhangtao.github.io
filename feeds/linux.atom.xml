@@ -96,4 +96,18 @@ ftp&amp;gt; mget *
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;Linux常见压缩文件的解压&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;1、*.tar 用 tar –xvf 解压
+2、*.gz 用 gzip -d或者gunzip 解压
+3、*.tar.gz和*.tgz 用 tar –xzf 解压
+4、*.bz2 用 bzip2 -d或者用bunzip2 解压
+5、*.tar.bz2用tar –xjf 解压
+6、*.Z 用 uncompress 解压
+7、*.tar.Z 用tar –xZf 解压
+8、*.rar 用 unrar e解压
+9、*.zip 用 unzip 解压
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;</summary></entry></feed>

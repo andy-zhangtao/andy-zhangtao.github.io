@@ -227,6 +227,20 @@ ftp&amp;gt; mget *
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;Linux常见压缩文件的解压&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;1、*.tar 用 tar –xvf 解压
+2、*.gz 用 gzip -d或者gunzip 解压
+3、*.tar.gz和*.tgz 用 tar –xzf 解压
+4、*.bz2 用 bzip2 -d或者用bunzip2 解压
+5、*.tar.bz2用tar –xjf 解压
+6、*.Z 用 uncompress 解压
+7、*.tar.Z 用tar –xZf 解压
+8、*.rar 用 unrar e解压
+9、*.zip 用 unzip 解压
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;</summary></entry><entry><title>升级Docker 1.10遇到的小问题</title><link href="/sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html" rel="alternate"></link><updated>2016-01-13T00:00:00+08:00</updated><author><name>andy.zhangtao</name></author><id>tag:,2016-01-13:sheng-ji-docker-110yu-dao-de-xiao-wen-ti.html</id><summary type="html">&lt;h1&gt;Docker升级到1.10遇到的小问题&lt;/h1&gt;
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;p&gt;目前Docker最新开发版本为1.10，在1.10当中，Docker从内核层面做了很多重构。将以前偶合度较高的代码通过Interface进行了接耦合，代码逻辑关系变的非常清晰。
