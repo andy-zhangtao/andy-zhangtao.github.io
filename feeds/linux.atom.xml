@@ -110,4 +110,10 @@ ftp&amp;gt; mget *
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;使用GREP显示行号&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;grep -n &amp;lt;data&amp;gt; FILENAME
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;</summary></entry></feed>
