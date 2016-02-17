@@ -116,4 +116,14 @@ ftp&amp;gt; mget *
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;通过Lftp免口令下载文件&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;lftp -u Username[,password] 
+
+lftp -u name,passwrod sftp://xxxxxxx &amp;lt;&amp;lt;!
+command
+!
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;</summary></entry></feed>
