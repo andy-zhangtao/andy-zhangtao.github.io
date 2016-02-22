@@ -126,4 +126,10 @@ command
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2&gt;Python自带Json美化库&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;xxxxxx | python -m json.tool
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;</summary></entry></feed>
