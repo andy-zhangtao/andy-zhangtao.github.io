@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>andy's blog</title>
+    <title>如何搭建Lua开发环境</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="andy.zhangtao">
@@ -84,7 +84,7 @@
 						<i class="icon-folder-open icon-large"></i>Linux
 					</a>
                   </li>
-                  <li >
+                  <li class="active">
                     <a href="/category/lua.html">
 						<i class="icon-folder-open icon-large"></i>Lua
 					</a>
@@ -109,9 +109,99 @@
     <div class="container-fluid">
       <div class="row">
         <div class="span9" id="content">
+<section id="content">
+        <article>
+                <header>
+                        <h1>
+                                <a href=""
+                                        rel="bookmark"
+                                        title="Permalink to 如何搭建Lua开发环境">
+                                        如何搭建Lua开发环境
+                                </a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2016-08-18T00:00:00+08:00">
+        <i class="icon-calendar"></i>四 18 八月 2016
+</abbr>
+<span class="label">By</span>
+<a href="/author/andyzhangtao.html"><i class="icon-user"></i>andy.zhangtao</a>
+<span class="label">Category</span>
+<a href="/category/lua.html"><i class="icon-folder-open"></i>Lua</a>.
+
+
+</footer><!-- /.post-info -->                </div>
+                <h1>如何搭建Lua开发环境</h1>
+<h2>摘要</h2>
+<p>工欲善其事必先利其器，在开发Lua代码之前，我们必须要搭建好一个Lua开发环境。下面是在MAC上面搭建Lua环境的步骤。 Linux上面的步骤与其基本相似，而Windows与之有所差异，在最后将补充说明。</p>
+<h2>环境清单</h2>
 <ul>
-<li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
+<li>lua 5.3.3</li>
+<li>luarocks 2.3.0</li>
 </ul>
+<h2>安装过程</h2>
+<ol>
+<li>首先下载lua最新release版本，5.3.3. </li>
+</ol>
+<p><code>
+    wget -R -O https://www.lua.org/ftp/lua-5.3.3.tar.gz
+  </code></p>
+<ol>
+<li>解压此压缩包，并且在目录中执行make。</li>
+</ol>
+<p>```
+    tar zxf lua-5.3.3.tar.gz </p>
+<div class="highlight"><pre>cd lua-5.3.3
+
+make macosx test( <span class="nt">&lt;b&gt;</span> 在mac系统中，一定要执行这一句 <span class="nt">&lt;/b&gt;</span> )
+</pre></div>
+
+
+<p>```</p>
+<ol>
+<li>执行安装脚本</li>
+</ol>
+<p><code>make install</code></p>
+<ol>
+<li>写一个最简单的Lua脚本，验证我们安装是否成功。</li>
+</ol>
+<p>```
+    test.lua (脚本名称)</p>
+<div class="highlight"><pre>print (&quot;Hello World!&quot;)
+</pre></div>
+
+
+<p>```</p>
+<ol>
+<li>执行脚本</li>
+</ol>
+<p>```
+   lua test.lua</p>
+<p>Hello World!
+   ```</p>
+<p>OK, 安装成功。</p>
+<p>如果需要在Windows系统中开发Lua，推荐使用SciTE。SciTE下载地址为：
+https://github.com/rjpcomputing/luaforwindows/releases</p>
+                </div><!-- /.entry-content -->
+                <div class="comments">
+                <h2>Comments !</h2>
+                        <div id="disqus_thread"></div>
+                        <script type="text/javascript">
+                           var disqus_identifier = "ru-he-da-jian-luakai-fa-huan-jing.html";
+                           (function() {
+                                var dsq = document.createElement('script');
+                                dsq.type = 'text/javascript'; dsq.async = true;
+                                dsq.src = 'http://andy-s-blog.disqus.com/embed.js';
+                                (document.getElementsByTagName('head')[0] ||
+                                 document.getElementsByTagName('body')[0]).appendChild(dsq);
+                          })();
+                        </script>
+                </div>
+        </article>
+</section>
         </div><!--/span-->
 
                 <div class="span3 well sidebar-nav" id="sidebar">
